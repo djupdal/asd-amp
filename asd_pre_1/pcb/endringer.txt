@@ -1,0 +1,5 @@
+Endre 10uF til pakke 1210
+Endre til større pakker (5x5mm el) for effektspolene
+Legge til 3 x pullups på flash
+Endre direction nRST_DAC
+Jorde CARD/WRITE

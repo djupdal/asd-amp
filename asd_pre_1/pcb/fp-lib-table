@@ -1,0 +1,4 @@
+(fp_lib_table
+  (lib (name pre)(type KiCad)(uri /home/djupdal/Dokumenter/amp/asd_pre_1/pre.pretty)(options "")(descr ""))
+  (lib (name pa)(type KiCad)(uri /home/djupdal/Dokumenter/amp/asd_pa_1/amp.pretty)(options "")(descr ""))
+)

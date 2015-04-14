@@ -1,0 +1,31 @@
+* asdf
+
+V1 VCC 0 30V
+V2 VEE 0 -30V
+V3 /in /in_gnd AC 1 SIN(0 1V 1k)
+*V3 /in /in_gnd 0V
+
+R110 GND 0 0
+R111 /Protection/Gnd 0 0
+R112 /Protection/GndZ 0 0
+
+R200 /Protection/Speaker 0 8
+
+.include spice_asd.txt
+.include "Cordell Models.txt"
+
+.control
+set color0 = white
+set color1 = black
+set color2 = blue
+set temp=25
+tran 1u 1000u
+plot v("Net-_C5-Pad1_")-v("Net-_C4-Pad2_")
+
+set color0 = white
+set color1 = black
+set color2 = red
+set temp=80
+tran 1u 1000u
+plot v("Net-_C5-Pad1_")-v("Net-_C4-Pad2_")
+.endc

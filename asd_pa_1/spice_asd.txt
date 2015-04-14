@@ -1,0 +1,99 @@
+* models
+
+.SUBCKT POT_1K 1 2 3 
+R0	1	2	380
+R1	2	3 620
+.ENDS
+
+.SUBCKT RELAY_SPDT 1 2 3 4 5
+*R0	2	4 0
+R0	3	4 0
+R1  1 5 1100
+.ENDS
+
+.model Z8_2 D(bv=8.2)
+.model Z24 D(bv=24)
+.model DIODE D
+
+.model 1N4004 D  (IS=500p RS=0.12 BV=400 IBV=5.00u CJO=40p  M=0.35 N=1.6 TT=4u)
+.model 1N4148 D(Is=5n Rs=1.0 N=1.9 Cjo=4p M=.4 tt=20n)
+
+.MODEL BC546 NPN( 
++     IS=1.533E-14
++     NF=1.002
++     ISE=7.932E-16
++     NE=1.436
++     BF=178.7
++     IKF=0.1216
++     VAF=69.7
++     NR=1.004
++     ISC=8.305E-14
++     NC=1.207
++     BR=8.628
++     IKR=0.1121
++     VAR=44.7
++     RB=1
++     IRB=1E-06
++     RBM=1
++     RE=0.6395
++     RC=0.6508
++     XTB=0
++     EG=1.11
++     XTI=3
++     CJE=1.61E-11
++     VJE=0.4209
++     MJE=0.3071
++     TF=4.995E-10
++     XTF=139
++     VTF=3.523
++     ITF=0.7021
++     PTF=0
++     CJC=4.388E-12
++     VJC=0.2
++     MJC=0.2793
++     XCJC=0.6193
++     TR=1E-32
++     CJS=0
++     VJS=0.75
++     MJS=0.333
++     FC=0.7762 )
+
+.MODEL BC556 PNP( 
++     IS=2.059E-14
++     NF=1.003
++     ISE=2.971E-15
++     NE=1.316
++     BF=227.3
++     IKF=0.08719
++     VAF=37.2
++     NR=1.007
++     ISC=1.339E-14
++     NC=1.15
++     BR=7.69
++     IKR=0.07646
++     VAR=11.42
++     RB=1
++     IRB=1E-06
++     RBM=1
++     RE=0.688
++     RC=0.6437
++     XTB=0
++     EG=1.11
++     XTI=3
++     CJE=1.4E-11
++     VJE=0.5912
++     MJE=0.3572
++     TF=7.046E-10
++     XTF=4.217
++     VTF=5.367
++     ITF=0.1947
++     PTF=0
++     CJC=1.113E-11
++     VJC=0.1
++     MJC=0.3414
++     XCJC=0.6288
++     TR=1E-32
++     CJS=0
++     VJS=0.75
++     MJS=0.333
++     FC=0.7947 )
