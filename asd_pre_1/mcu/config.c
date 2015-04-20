@@ -16,6 +16,23 @@ struct configLine {
 struct configLine *config = NULL;
 struct configLine *lastConfig = NULL;
 
+static void printConfig(void) {
+  printf("Current config:\n");
+  
+  struct configLine *c = config;
+
+  while(c) {
+    if(c->id[0]) {
+      printf("%s", c->id);
+      if(c->value[0]) {
+        printf(" %s", c->value);
+      }
+    }
+    printf("\n");
+    c = c->next;
+  }
+}
+
 void configInit(void) {
   FIL fil;
   FRESULT fr;
@@ -37,8 +54,9 @@ void configInit(void) {
       // comment, store it all
       strcpy(cLine->id, line);
       *strchr(cLine->id, '\n') = 0;
+      cLine->value[0] = 0;
     } else if(isspace(line[0])) {
-      // shite space, just insert blank line
+      // white space, just insert blank line
       cLine->id[0] = 0;
     } else {
       // id
@@ -53,12 +71,16 @@ void configInit(void) {
     }
   }
 
+  printConfig();
+
   f_close(&fil);
 }
 
 void flushConfig(void) {
   FIL fil;
   FRESULT fr;
+
+  //printConfig();
 
   fr = f_open(&fil, "config.txt", FA_WRITE | FA_CREATE_ALWAYS);
   if (fr) return;
@@ -68,7 +90,9 @@ void flushConfig(void) {
   while(c) {
     if(c->id[0]) {
       f_printf(&fil, "%s", c->id);
-      if(c->value[0]) f_printf(&fil, " %s", c->value);
+      if(c->value[0]) {
+        f_printf(&fil, " %s", c->value);
+      }
     }
     f_printf(&fil, "\n");
     c = c->next;

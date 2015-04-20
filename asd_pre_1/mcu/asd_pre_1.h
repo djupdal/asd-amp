@@ -25,6 +25,8 @@
 #define LED0_PORT gpioPortF
 #define LED1_BIT 4
 #define LED1_PORT gpioPortF
+#define LED2_BIT GPIO_1_BIT
+#define LED2_PORT GPIO_1_PORT
  
 #define PROGRAM_B_BIT 4
 #define PROGRAM_B_PORT gpioPortA
@@ -99,6 +101,9 @@
 #define VOL_B_BIT 15
 #define VOL_B_PORT gpioPortC
 
+#define SOURCE_BIT GPIO_0_BIT
+#define SOURCE_PORT GPIO_0_PORT
+
 #define GPIO_0_BIT 6
 #define GPIO_0_PORT gpioPortD
 #define GPIO_1_BIT 7
@@ -116,7 +121,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #define INT_ETH 0x10
-#define INT_GPIO_0 0x40
+#define INT_SOURCE 0x40
 #define INT_SD 0x80
 #define INT_VOL_EVEN 0x4000
 #define INT_VOL_ODD 0x8000

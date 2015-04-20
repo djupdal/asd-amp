@@ -41,6 +41,8 @@ static FATFS FatFs;
 static bool updateVolume = false;
 static bool updateSource = false;
 
+static bool init = false;
+
 ///////////////////////////////////////////////////////////////////////////////
 
 void spdifInit(void) {
@@ -108,7 +110,7 @@ void sdInit(void) {
 
 void paInit(void) {
   // setup mute
-  GPIO_PinModeSet(MUTE_PORT, MUTE_BIT, gpioModePushPull, 1);
+  GPIO_PinModeSet(MUTE_PORT, MUTE_BIT, gpioModePushPull, 0);
 
   // setup volume
   GPIO_PinModeSet(VOL_A_PORT, VOL_A_BIT, gpioModeInput, 0);
@@ -120,16 +122,14 @@ void paInit(void) {
   NVIC_ClearPendingIRQ(GPIO_ODD_IRQn);
   NVIC_EnableIRQ(GPIO_ODD_IRQn);
 
-  // setup GPIO
-  GPIO_PinModeSet(GPIO_0_PORT, GPIO_0_BIT, gpioModeInputPullFilter, 1);
-  GPIO_IntConfig(GPIO_0_PORT, GPIO_0_BIT, false, true, true);
-  GPIO_PinModeSet(GPIO_1_PORT, GPIO_1_BIT, gpioModeInput, 0);
-  GPIO_PinModeSet(GPIO_2_PORT, GPIO_2_BIT, gpioModeInput, 0);
-  GPIO_PinModeSet(GPIO_3_PORT, GPIO_3_BIT, gpioModeInput, 0);
+  // setup buttons
+  GPIO_PinModeSet(SOURCE_PORT, SOURCE_BIT, gpioModeInputPullFilter, 1);
+  GPIO_IntConfig(SOURCE_PORT, SOURCE_BIT, false, true, true);
 
   // setup LEDs
   GPIO_PinModeSet(LED0_PORT, LED0_BIT, gpioModePushPull, LED_ON);
-  GPIO_PinModeSet(LED1_PORT, LED1_BIT, gpioModePushPull, LED_OFF);
+  GPIO_PinModeSet(LED1_PORT, LED1_BIT, gpioModePushPull, LED_ON);
+  GPIO_PinModeSet(LED2_PORT, LED2_BIT, gpioModePushPull, LED_OFF);
 }
 
 void updateVol(int a, int b) {
@@ -168,28 +168,50 @@ void updateVol(int a, int b) {
 }
 
 void setLed(int led) {
-  if(led)
-    GPIO_PinOutClear(LED1_PORT, LED1_BIT);
-  else
-    GPIO_PinOutClear(LED0_PORT, LED0_BIT);
+  switch(led) {
+    case 0:
+      GPIO_PinOutClear(LED0_PORT, LED0_BIT);
+      break;
+    case 1:
+      GPIO_PinOutClear(LED1_PORT, LED1_BIT);
+      break;
+    case 2:
+      GPIO_PinOutSet(LED2_PORT, LED2_BIT);
+      break;
+  }
 }
+
 void clearLed(int led) {
-  if(led)
-    GPIO_PinOutSet(LED1_PORT, LED1_BIT);
-  else
-    GPIO_PinOutSet(LED0_PORT, LED0_BIT);
+  switch(led) {
+    case 0:
+      GPIO_PinOutSet(LED0_PORT, LED0_BIT);
+      break;
+    case 1:
+      GPIO_PinOutSet(LED1_PORT, LED1_BIT);
+      break;
+    case 2:
+      GPIO_PinOutClear(LED2_PORT, LED2_BIT);
+      break;
+  }
 }
 
 void cycleSource(void) {
   // debounce button
   usleep(1000);
-  GPIO_IntClear(INT_GPIO_0); // remove interrupts that arrived while debouncing
+  GPIO_IntClear(INT_SOURCE); // remove interrupts that arrived while debouncing
 
-  if(!GPIO_PinInGet(GPIO_0_PORT, GPIO_0_BIT)) {
+  dacMute(true);
+
+  if(!GPIO_PinInGet(SOURCE_PORT, SOURCE_BIT)) {
+    clearLed(source);
     source = (source + 1) % 3;
     fpgaSelectSource(source);
     updateSource = true;
+    setLed(source);
   }
+
+  usleep(1000);
+  dacMute(false);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -244,9 +266,8 @@ void panic(const char *fmt, ...) {
 ///////////////////////////////////////////////////////////////////////////////
 
 int main(void) {
-  __disable_irq();
-
   msTicks = 0;
+  init = false;
 
   CHIP_Init();
    
@@ -289,6 +310,7 @@ int main(void) {
   configInit();
 
   volume = getUint32("volume");
+  if(volume == 0) volume = VOL_MAX;
   if(volume < VOL_MIN) volume = VOL_MIN;
   if(volume > VOL_MAX) volume = VOL_MAX;
 
@@ -302,17 +324,21 @@ int main(void) {
   adcInit();
   netInit();
 
-  __enable_irq();
+  init = true;
 
   // wait a while before unmuting
   while(msTicks < 2000);
-  GPIO_PinModeSet(MUTE_PORT, MUTE_BIT, gpioModePushPull, 0);
+  GPIO_PinModeSet(MUTE_PORT, MUTE_BIT, gpioModePushPull, 1);
 
   clearLed(0);
+  clearLed(1);
+  clearLed(2);
+  setLed(source);
 
   printf("Ready\n");
 
   while(true) {
+    msleep(1000);
     sys_check_timeouts();
     if(updateVolume) {
       updateVolume = false;
@@ -338,23 +364,27 @@ void GPIO_EVEN_IRQHandler(void) {
   uint32_t ints = GPIO_IntGet();
   GPIO_IntClear(ints);
 
-  if(ints & INT_VOL_EVEN) {
-    int a = GPIO_PinInGet(VOL_A_PORT, VOL_A_BIT);
-    int b = GPIO_PinInGet(VOL_B_PORT, VOL_B_BIT);
-    updateVol(a, b);
+  if(init) {
+    if(ints & INT_VOL_EVEN) {
+      int a = GPIO_PinInGet(VOL_A_PORT, VOL_A_BIT);
+      int b = GPIO_PinInGet(VOL_B_PORT, VOL_B_BIT);
+      updateVol(a, b);
+    }
+    if(ints & INT_SOURCE) cycleSource();
+    if(ints & INT_ETH) enc424j600_spi_poll(&netif);
   }
-  if(ints & INT_GPIO_0) cycleSource();
-  if(ints & INT_ETH) enc424j600_spi_poll(&netif);
 }
 
 void GPIO_ODD_IRQHandler(void) {
   uint32_t ints = GPIO_IntGet();
   GPIO_IntClear(ints);
 
-  if(ints & INT_VOL_ODD) {
-    int a = GPIO_PinInGet(VOL_A_PORT, VOL_A_BIT);
-    int b = GPIO_PinInGet(VOL_B_PORT, VOL_B_BIT);
-    updateVol(a, b);
+  if(init) {
+    if(ints & INT_VOL_ODD) {
+      int a = GPIO_PinInGet(VOL_A_PORT, VOL_A_BIT);
+      int b = GPIO_PinInGet(VOL_B_PORT, VOL_B_BIT);
+      updateVol(a, b);
+    }
+    if(ints & INT_SD) mountUnmount();
   }
-  if(ints & INT_SD) mountUnmount();
 }
