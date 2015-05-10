@@ -16,6 +16,11 @@ import java.net.*;
 import java.util.*;
 
 public class AsdPre1 extends Activity {
+  Socket socket = null;
+  PrintWriter out;
+  BufferedReader in;
+  boolean socketClosed = true;
+
   //ToggleButton muteButton;
   SeekBar seekBar;
   RadioButton source0;
@@ -105,45 +110,54 @@ public class AsdPre1 extends Activity {
   // }
 
   public void onRadioButtonClicked(View view) {
-    // Is the button now checked?
-    boolean checked = ((RadioButton) view).isChecked();
+    boolean checked = ((RadioButton)view).isChecked();
     
-    // Check which radio button was clicked
     switch(view.getId()) {
       case R.id.radio_source_0:
-        if (checked) {
+        if(checked) {
           sendMessage("SET_SOURCE 0");
-          Log.w("AsdPre1", "0");
+          Log.w("AsdPre1", "source 0");
         }
         break;
       case R.id.radio_source_1:
-        if (checked) {
+        if(checked) {
           sendMessage("SET_SOURCE 1");
-          Log.w("AsdPre1", "1");
+          Log.w("AsdPre1", "source 1");
         }
         break;
       case R.id.radio_source_2:
-        if (checked) {
+        if(checked) {
           sendMessage("SET_SOURCE 2");
-          Log.w("AsdPre1", "2");
+          Log.w("AsdPre1", "source 2");
         }
         break;
     }
   }
 
   private int sendMessage(String message) {
-    Socket socket;
-
     Log.w("AsdPre1", "Sending: " + message);
 
     try {
-      InetAddress serverAddr = InetAddress.getByName(SERVER_IP);
-      socket = new Socket(serverAddr, SERVERPORT);
+      if(socket != null) {
+        if(socket.isClosed()) {
+          socketClosed = true;
+          Log.w("AsdPre1", "Closed socket");
+        }
+      }
 
-      PrintWriter out =
-        new PrintWriter(socket.getOutputStream(), true);
-      BufferedReader in =
-        new BufferedReader(new InputStreamReader(socket.getInputStream()));
+      if(socketClosed) {
+        Log.w("AsdPre1", "Open socket");
+
+        InetAddress serverAddr = InetAddress.getByName(SERVER_IP);
+        socket = new Socket(serverAddr, SERVERPORT);
+
+        out =
+          new PrintWriter(socket.getOutputStream(), true);
+        in =
+          new BufferedReader(new InputStreamReader(socket.getInputStream()));
+
+        socketClosed = false;
+      }
 
       out.println(message);
       String answer = in.readLine();
@@ -151,11 +165,9 @@ public class AsdPre1 extends Activity {
       Log.w("AsdPre1", "Receiving: " + answer);
 
       StringTokenizer tok = new StringTokenizer(answer);
-      
-      tok.nextToken();
+      tok.nextToken(); // get rid of answer type
 
       int x = 0;
-
       if(tok.hasMoreTokens()) {
         x = Integer.parseInt(tok.nextToken());
       }
@@ -164,7 +176,9 @@ public class AsdPre1 extends Activity {
 
     } catch (Exception e1) {
       e1.printStackTrace();
+      socketClosed = true;
+      Log.w("AsdPre1", "Closed socket (exc)");
+      return sendMessage(message);
     }
-    return 0;
   }
 }
