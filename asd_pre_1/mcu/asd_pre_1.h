@@ -155,4 +155,11 @@ void setString(char *id, char *s);
 
 void panic(const char *fmt, ...);
 
+bool netInit(void);
+void netIRQ();
+
+#define VOL_MAX 1600
+#define VOL_MIN 0
+#define SOURCES 3
+
 #endif

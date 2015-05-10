@@ -10,30 +10,14 @@
 #include <em_timer.h>
 #include <em_rmu.h>
 
-#include "lwip/dhcp.h"
-#include "lwip/inet.h"
-#include "lwip/tcp.h"
-#include "lwip/tcp_impl.h"
-#include "lwip/ip_frag.h"
-#include "lwip/netif.h"
-#include "lwip/init.h"
-#include "lwip/stats.h"
-#include "netif/etharp.h"
-#include "enc424j600_eth.h"
-#include "lwip/timers.h"
-
 #define VOL_SHIFT 3
-#define VOL_MAX 1600
-#define VOL_MIN 0
 #define VOL_SLACK 100
 
-#define SOURCE_MAX 2
-
-static int16_t volume = VOL_MAX;
+int16_t volume = VOL_MAX;
 static int last_phase = 0;
 static bool muted = false;
 
-static int source = 0;
+int source = 0;
 
 volatile uint32_t msTicks;
 static FATFS FatFs;
@@ -132,6 +116,24 @@ void paInit(void) {
   GPIO_PinModeSet(LED2_PORT, LED2_BIT, gpioModePushPull, LED_OFF);
 }
 
+void setVol(int16_t newVolume) {
+  volume = newVolume;
+
+  // set volume on DAC
+  if(volume <= VOL_MIN) dacSetVolume(VOL_MIN>>VOL_SHIFT);
+  else dacSetVolume(volume>>VOL_SHIFT);
+  updateVolume = true;
+
+  // mute DAC if volume is below limit
+  if(volume >= VOL_MAX) {
+    dacMute(true);
+    muted = true;
+  } else if(muted) {
+    dacMute(false);
+    muted = false;
+  }
+}
+
 void updateVol(int a, int b) {
   int phase;
 
@@ -149,19 +151,7 @@ void updateVol(int a, int b) {
     if(volume < (VOL_MAX+VOL_SLACK)) volume++;
   }
 
-  // set volume on DAC
-  if(volume <= VOL_MIN) dacSetVolume(VOL_MIN>>VOL_SHIFT);
-  else dacSetVolume(volume>>VOL_SHIFT);
-  updateVolume = true;
-
-  // mute DAC if volume is below limit
-  if(volume >= VOL_MAX) {
-    dacMute(true);
-    muted = true;
-  } else if(muted) {
-    dacMute(false);
-    muted = false;
-  }
+  setVol(volume);
 
   // save state
   last_phase = phase;
@@ -195,6 +185,14 @@ void clearLed(int led) {
   }
 }
 
+void setSource(int newSource) {
+  clearLed(source);
+  source = newSource % SOURCES;
+  fpgaSelectSource(source);
+  updateSource = true;
+  setLed(source);
+}
+
 void cycleSource(void) {
   // debounce button
   usleep(1000);
@@ -203,40 +201,11 @@ void cycleSource(void) {
   dacMute(true);
 
   if(!GPIO_PinInGet(SOURCE_PORT, SOURCE_BIT)) {
-    clearLed(source);
-    source = (source + 1) % 3;
-    fpgaSelectSource(source);
-    updateSource = true;
-    setLed(source);
+    setSource(source + 1);
   }
 
   usleep(1000);
   dacMute(false);
-}
-
-///////////////////////////////////////////////////////////////////////////////
-
-struct netif netif;
-
-void netInit(void) {
-  struct ip_addr ipaddr;
-  struct ip_addr netmask;
-  struct ip_addr gw;
-
-  GPIO_PinModeSet(nINT_ETH_PORT, nINT_ETH_BIT, gpioModeInput, 1);
-  GPIO_IntConfig(nINT_ETH_PORT, nINT_ETH_BIT, true, true, true);
-
-  IP4_ADDR(&gw, 192,168,1,1);
-  IP4_ADDR(&ipaddr, 192,168,1,10);
-  IP4_ADDR(&netmask, 255,255,255,0);
-
-  lwip_init();
-
-  netif_add(&netif, &ipaddr, &netmask, &gw, NULL,
-            enc424j600_spi_init, ethernet_input);
-  netif_set_default(&netif);
-
-  dhcp_start(&netif);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -314,9 +283,7 @@ int main(void) {
   if(volume < VOL_MIN) volume = VOL_MIN;
   if(volume > VOL_MAX) volume = VOL_MAX;
 
-  source = getUint32("source");
-  if(source < 0) source = 0;
-  if(source > SOURCE_MAX) source = SOURCE_MAX;
+  source = getUint32("source") % SOURCES;
 
   fpgaInit(source);
   spdifInit();
@@ -339,7 +306,9 @@ int main(void) {
 
   while(true) {
     msleep(1000);
+
     sys_check_timeouts();
+
     if(updateVolume) {
       updateVolume = false;
       setUint32("volume", volume);
@@ -371,7 +340,7 @@ void GPIO_EVEN_IRQHandler(void) {
       updateVol(a, b);
     }
     if(ints & INT_SOURCE) cycleSource();
-    if(ints & INT_ETH) enc424j600_spi_poll(&netif);
+    if(ints & INT_ETH) netIRQ();
   }
 }
 

@@ -13,6 +13,8 @@
 
 #define ARP_TABLE_SIZE              3
 
+#define LWIP_NETIF_STATUS_CALLBACK  1
+
 #define LWIP_DEBUG                  0
 #define IP_REASSEMBLY               0
 #define IP_FRAG                     0
