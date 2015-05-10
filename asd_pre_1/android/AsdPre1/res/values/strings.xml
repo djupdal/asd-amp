@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">AsdPre1</string>
+    <string name="button_voldown">&#60;--</string>
+    <string name="button_volup">--&#62;</string>
+    <string name="radio_source_0">SPDIF</string>
+    <string name="radio_source_1">Optisk</string>
+    <string name="radio_source_2">Analog</string>
 </resources>

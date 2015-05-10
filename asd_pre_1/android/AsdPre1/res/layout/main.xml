@@ -1,13 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    >
-<TextView  
-    android:layout_width="fill_parent" 
-    android:layout_height="wrap_content" 
-    android:text="Hello World, AsdPre1"
-    />
+              android:orientation="vertical"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              >
+  <!-- <TextView   -->
+  <!--     android:layout_width="wrap_content"  -->
+  <!--     android:layout_height="wrap_content"  -->
+  <!--     android:text="Lyd: " -->
+  <!--     /> -->
+  <!-- <ToggleButton  -->
+  <!--     android:id="@+id/mute" -->
+  <!--     android:layout_width="wrap_content" -->
+  <!--     android:layout_height="wrap_content" -->
+  <!--     android:textOn="Lyd på" -->
+  <!--     android:textOff="Lyd av" -->
+  <!--     android:onClick="onToggleClicked"/> -->
+  <TextView  
+      android:layout_width="wrap_content" 
+      android:layout_height="wrap_content" 
+      android:text="Volum: "
+      />
+  <SeekBar
+	    android:id="@+id/volume"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_alignParentLeft="true"
+	    android:layout_alignParentTop="true"
+	    android:max="100"
+      android:onClick="onSeekBarClicked"/>
+
+  <TextView  
+      android:layout_width="fill_parent" 
+      android:layout_height="wrap_content" 
+      android:text="Kilde: "
+      />
+  <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="fill_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical">
+    <RadioButton android:id="@+id/radio_source_2"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:text="@string/radio_source_2"
+                 android:onClick="onRadioButtonClicked"/>
+    <RadioButton android:id="@+id/radio_source_1"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:text="@string/radio_source_1"
+                 android:onClick="onRadioButtonClicked"/>
+    <RadioButton android:id="@+id/radio_source_0"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:text="@string/radio_source_0"
+                 android:onClick="onRadioButtonClicked"/>
+  </RadioGroup>
 </LinearLayout>
 
