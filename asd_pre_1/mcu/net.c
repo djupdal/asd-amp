@@ -20,11 +20,6 @@ struct netconn *conn;
 #define NETCMD_VOL    1
 #define NETCMD_SOURCE 2
 
-extern int16_t volume;
-extern int source;
-void setVol(int16_t newVolume);
-void setSource(int newSource);
-
 ///////////////////////////////////////////////////////////////////////////////
 
 void netIRQ() {
@@ -81,6 +76,20 @@ static err_t server_recv(void *arg, struct tcp_pcb *pcb, struct pbuf *p,
 
       } else if(!strcmp(cmd, "GET_SOURCES")) {
         sprintf(sendbuf, "SOURCES %d\n", SOURCES);
+
+      } else if(!strcmp(cmd, "SET_MUTE")) {
+        setMute(strtol(arg, NULL, 0) != 0 ? true : false);
+        sprintf(sendbuf, "OK\n");
+
+      } else if(!strcmp(cmd, "GET_MUTE")) {
+        sprintf(sendbuf, "MUTE %d\n", mute ? 1 : 0);
+
+      } else if(!strcmp(cmd, "SAVE")) {
+        saveSettings = true;
+        sprintf(sendbuf, "OK\n");
+
+      } else {
+        sprintf(sendbuf, "ERR\n");
       }
 
       tcp_write(pcb, sendbuf, strlen(sendbuf), TCP_WRITE_FLAG_COPY);
@@ -159,8 +168,7 @@ bool netInit(void) {
   GPIO_PinModeSet(nINT_ETH_PORT, nINT_ETH_BIT, gpioModeInput, 1);
   GPIO_IntConfig(nINT_ETH_PORT, nINT_ETH_BIT, true, true, true);
 
-  // does not matter, we use DHCP
-  IP4_ADDR(&gw, 192,168,1,100);
+  IP4_ADDR(&gw, 192,168,1,1);
   IP4_ADDR(&ipaddr, 192,168,1,10);
   IP4_ADDR(&netmask, 255,255,255,0);
 
@@ -169,10 +177,18 @@ bool netInit(void) {
   netif_add(&netif, &ipaddr, &netmask, &gw, NULL,
             enc424j600_spi_init, ethernet_input);
   netif_set_default(&netif);
+  netif_set_up(&netif);
 
+#ifdef USE_DHCP
   netif_set_status_callback(&netif, status_callback);
-
   dhcp_start(&netif);
+#else
+  status_callback(&netif);
+#endif
 
   return true;
+}
+
+void netPeriodic(void) {
+  sys_check_timeouts();
 }

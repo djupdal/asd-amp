@@ -15,15 +15,15 @@
 
 int16_t volume = VOL_MAX;
 static int last_phase = 0;
-static bool muted = false;
+static bool dacMuted = false;
+bool mute = false;
 
 int source = 0;
 
 volatile uint32_t msTicks;
 static FATFS FatFs;
 
-static bool updateVolume = false;
-static bool updateSource = false;
+bool saveSettings = false;
 
 static bool init = false;
 
@@ -116,21 +116,26 @@ void paInit(void) {
   GPIO_PinModeSet(LED2_PORT, LED2_BIT, gpioModePushPull, LED_OFF);
 }
 
+void setMute(bool newMute) {
+  mute = newMute;
+
+  GPIO_PinModeSet(MUTE_PORT, MUTE_BIT, gpioModePushPull, mute ? 0 : 1);
+}
+
 void setVol(int16_t newVolume) {
   volume = newVolume;
 
   // set volume on DAC
   if(volume <= VOL_MIN) dacSetVolume(VOL_MIN>>VOL_SHIFT);
   else dacSetVolume(volume>>VOL_SHIFT);
-  updateVolume = true;
 
   // mute DAC if volume is below limit
   if(volume >= VOL_MAX) {
     dacMute(true);
-    muted = true;
-  } else if(muted) {
+    dacMuted = true;
+  } else if(dacMuted) {
     dacMute(false);
-    muted = false;
+    dacMuted = false;
   }
 }
 
@@ -152,6 +157,7 @@ void updateVol(int a, int b) {
   }
 
   setVol(volume);
+  saveSettings = true;
 
   // save state
   last_phase = phase;
@@ -189,7 +195,7 @@ void setSource(int newSource) {
   clearLed(source);
   source = newSource % SOURCES;
   fpgaSelectSource(source);
-  updateSource = true;
+  saveSettings = true;
   setLed(source);
 }
 
@@ -198,14 +204,9 @@ void cycleSource(void) {
   usleep(1000);
   GPIO_IntClear(INT_SOURCE); // remove interrupts that arrived while debouncing
 
-  dacMute(true);
-
   if(!GPIO_PinInGet(SOURCE_PORT, SOURCE_BIT)) {
     setSource(source + 1);
   }
-
-  usleep(1000);
-  dacMute(false);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -295,7 +296,7 @@ int main(void) {
 
   // wait a while before unmuting
   while(msTicks < 2000);
-  GPIO_PinModeSet(MUTE_PORT, MUTE_BIT, gpioModePushPull, 1);
+  setMute(false);
 
   clearLed(0);
   clearLed(1);
@@ -305,17 +306,11 @@ int main(void) {
   printf("Ready\n");
 
   while(true) {
-    msleep(1000);
+    netPeriodic();
 
-    sys_check_timeouts();
-
-    if(updateVolume) {
-      updateVolume = false;
+    if(saveSettings) {
+      saveSettings = false;
       setUint32("volume", volume);
-      if(mounted) flushConfig();
-    }
-    if(updateSource) {
-      updateSource = false;
       setUint32("source", source);
       if(mounted) flushConfig();
     }

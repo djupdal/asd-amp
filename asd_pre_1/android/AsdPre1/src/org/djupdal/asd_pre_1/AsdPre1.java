@@ -8,6 +8,9 @@ import android.widget.ToggleButton;
 import android.widget.SeekBar;
 import android.widget.SeekBar.*;
 import android.util.Log;
+import android.app.AlertDialog.Builder;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
@@ -21,7 +24,7 @@ public class AsdPre1 extends Activity {
   BufferedReader in;
   boolean socketClosed = true;
 
-  //ToggleButton muteButton;
+  ToggleButton muteButton;
   SeekBar seekBar;
   RadioButton source0;
   RadioButton source1;
@@ -30,11 +33,32 @@ public class AsdPre1 extends Activity {
   int volmin = 1600;
   int volmax = 0;
   int volume = 1600;
-  //boolean mute = false;
+  boolean mute = false;
   int source = 0;
 
+  int failCounter = 0;
+
   private static final int SERVERPORT = 80;
-  private static final String SERVER_IP = "192.168.1.105";
+  private static final String SERVER_IP = "192.168.1.10";
+
+  void getState() {
+    // get current state
+    try {
+      volume = sendMessage("GET_VOL");
+      volmin = sendMessage("GET_VOL_MIN");
+      volmax = sendMessage("GET_VOL_MAX");
+      mute = sendMessage("GET_MUTE") == 0 ? false : true;
+      source = sendMessage("GET_SOURCE");
+
+      muteButton.setChecked(!mute);
+      seekBar.setProgress(100-(100*(volume-volmax)/(volmin-volmax)));
+      switch(source) {
+        case 0: source0.setChecked(true); break;
+        case 1: source1.setChecked(true); break;
+        case 2: source2.setChecked(true); break;
+      }
+    } catch (Exception e) {}
+  }
 
   @Override
   public void onResume() {
@@ -42,20 +66,7 @@ public class AsdPre1 extends Activity {
 
     Log.w("AsdPre1", "resume");
 
-    // get current state
-    volume = sendMessage("GET_VOL");
-    volmin = sendMessage("GET_VOL_MIN");
-    volmax = sendMessage("GET_VOL_MAX");
-    //mute = sendMessage("GET_MUTE");
-    source = sendMessage("GET_SOURCE");
-
-    //muteButton.setChecked(!mute);
-    seekBar.setProgress(100-(100*(volume-volmax)/(volmin-volmax)));
-    switch(source) {
-      case 0: source0.setChecked(true); break;
-      case 1: source1.setChecked(true); break;
-      case 2: source2.setChecked(true); break;
-    }
+    getState();
   }
 
   /** Called when the activity is first created. */
@@ -67,7 +78,7 @@ public class AsdPre1 extends Activity {
     Log.w("AsdPre1", "create");
 
     // mute
-    //muteButton = (ToggleButton)findViewById(R.id.mute);
+    muteButton = (ToggleButton)findViewById(R.id.mute);
 
     // volume
     seekBar = (SeekBar)findViewById(R.id.volume);
@@ -79,7 +90,9 @@ public class AsdPre1 extends Activity {
                                       boolean fromUser) {
           progress = progresValue;
           int newVol = volmax+(volmin-volmax)*(100-progress)/100;
-          sendMessage("SET_VOL " + newVol);
+          try {
+            sendMessage("SET_VOL " + newVol);
+          } catch (Exception e) {}
           Log.w("AsdPre1", "volume " + newVol);
         }
           
@@ -89,6 +102,9 @@ public class AsdPre1 extends Activity {
           
         @Override
         public void onStopTrackingTouch(SeekBar seekBar) {
+          try {
+            sendMessage("SAVE");
+          } catch (Exception e) {}
         }
       });
 
@@ -98,40 +114,46 @@ public class AsdPre1 extends Activity {
     source2 = (RadioButton)findViewById(R.id.radio_source_2);
   }
 
-  // public void onToggleClicked(View view) {
-  //   // Is the toggle on?
-  //   boolean on = ((ToggleButton) view).isChecked();
+  public void onToggleClicked(View view) {
+    // Is the toggle on?
+    try {
+      mute = !((ToggleButton) view).isChecked();
     
-  //   if (on) {
-  //     Log.w("AsdPre1", "Lyd på");
-  //   } else {
-  //     Log.w("AsdPre1", "Lyd av");
-  //   }
-  // }
+      if (mute) {
+        sendMessage("SET_MUTE 1");
+        Log.w("AsdPre1", "Lyd på");
+      } else {
+        sendMessage("SET_MUTE 0");
+        Log.w("AsdPre1", "Lyd av");
+      }
+    } catch (Exception e) {}
+  }
 
   public void onRadioButtonClicked(View view) {
-    boolean checked = ((RadioButton)view).isChecked();
+    try {
+      boolean checked = ((RadioButton)view).isChecked();
     
-    switch(view.getId()) {
-      case R.id.radio_source_0:
-        if(checked) {
-          sendMessage("SET_SOURCE 0");
-          Log.w("AsdPre1", "source 0");
-        }
-        break;
-      case R.id.radio_source_1:
-        if(checked) {
-          sendMessage("SET_SOURCE 1");
-          Log.w("AsdPre1", "source 1");
-        }
-        break;
-      case R.id.radio_source_2:
-        if(checked) {
-          sendMessage("SET_SOURCE 2");
-          Log.w("AsdPre1", "source 2");
-        }
-        break;
-    }
+      switch(view.getId()) {
+        case R.id.radio_source_0:
+          if(checked) {
+            sendMessage("SET_SOURCE 0");
+            Log.w("AsdPre1", "source 0");
+          }
+          break;
+        case R.id.radio_source_1:
+          if(checked) {
+            sendMessage("SET_SOURCE 1");
+            Log.w("AsdPre1", "source 1");
+          }
+          break;
+        case R.id.radio_source_2:
+          if(checked) {
+            sendMessage("SET_SOURCE 2");
+            Log.w("AsdPre1", "source 2");
+          }
+          break;
+      }
+    } catch (Exception e) {}
   }
 
   private int sendMessage(String message) {
@@ -145,7 +167,7 @@ public class AsdPre1 extends Activity {
         }
       }
 
-      if(socketClosed) {
+      if(socketClosed || (socket == null)) {
         Log.w("AsdPre1", "Open socket");
 
         InetAddress serverAddr = InetAddress.getByName(SERVER_IP);
@@ -172,12 +194,20 @@ public class AsdPre1 extends Activity {
         x = Integer.parseInt(tok.nextToken());
       }
 
+      failCounter = 0;
+
       return x;
 
     } catch (Exception e1) {
+      Log.w("AsdPre1", "Socket exception " + failCounter);
       e1.printStackTrace();
-      socketClosed = true;
-      Log.w("AsdPre1", "Closed socket (exc)");
+      socket = null;
+
+      if(failCounter++ >= 1) {
+        AsdPre1.this.finish();
+        throw new RuntimeException("Feil");
+      }
+
       return sendMessage(message);
     }
   }

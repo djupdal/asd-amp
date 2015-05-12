@@ -157,9 +157,19 @@ void panic(const char *fmt, ...);
 
 bool netInit(void);
 void netIRQ();
+void netPeriodic(void);
 
 #define VOL_MAX 1600
 #define VOL_MIN 0
 #define SOURCES 3
+
+extern bool saveSettings;
+
+extern int16_t volume;
+extern int source;
+extern bool mute;
+void setVol(int16_t newVolume);
+void setSource(int newSource);
+void setMute(bool newMute);
 
 #endif
