@@ -120,6 +120,13 @@ void setMute(bool newMute) {
   mute = newMute;
 
   GPIO_PinModeSet(MUTE_PORT, MUTE_BIT, gpioModePushPull, mute ? 0 : 1);
+  if(mute) {
+    clearLed(0);
+    clearLed(1);
+    clearLed(2);
+  } else {
+    setLed(source);
+  }
 }
 
 void setVol(int16_t newVolume) {
