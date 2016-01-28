@@ -5,15 +5,29 @@
 
 #define CMD_MAGIC 0x01
 #define CMD_SOURCE 0x02
+#define CMD_GAIN 0x03
 
 #define MAGIC 0xad
 
 void fpgaSelectSource(uint8_t source) {
+  printf("Source %d\n", source);
+
   // assert CS */
   GPIO_PinOutClear(FPGA_CS_PORT, FPGA_CS_BIT);
 
   USART_SpiTransfer(FPGA_USART, CMD_SOURCE);
   USART_SpiTransfer(FPGA_USART, source);
+
+  // release CS
+  GPIO_PinOutSet(FPGA_CS_PORT, FPGA_CS_BIT);
+}
+
+void fpgaSetGain(uint8_t gain) {
+  // assert CS */
+  GPIO_PinOutClear(FPGA_CS_PORT, FPGA_CS_BIT);
+
+  USART_SpiTransfer(FPGA_USART, CMD_GAIN);
+  USART_SpiTransfer(FPGA_USART, gain);
 
   // release CS
   GPIO_PinOutSet(FPGA_CS_PORT, FPGA_CS_BIT);
@@ -32,7 +46,7 @@ static uint8_t readMagic(void) {
   return rx;
 }
 
-void fpgaInit(uint32_t source) {
+void fpgaInit(uint8_t source, uint8_t gain) {
   // set up pins
   GPIO_PinModeSet(INT_FPGA_PORT, INT_FPGA_BIT, gpioModeInput, 0);
   GPIO_PinModeSet(PROGRAM_B_PORT, PROGRAM_B_BIT, gpioModePushPull, 1);
@@ -79,4 +93,5 @@ void fpgaInit(uint32_t source) {
   if(magic != MAGIC) panic("Incorrect FPGA magic number '%x'", magic);
 
   fpgaSelectSource(source);
+  fpgaSetGain(gain);
 }

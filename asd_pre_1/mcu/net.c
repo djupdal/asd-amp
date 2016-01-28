@@ -17,9 +17,6 @@
 struct netif netif;
 struct netconn *conn;
 
-#define NETCMD_VOL    1
-#define NETCMD_SOURCE 2
-
 ///////////////////////////////////////////////////////////////////////////////
 
 void netIRQ() {
@@ -76,6 +73,16 @@ static err_t server_recv(void *arg, struct tcp_pcb *pcb, struct pbuf *p,
 
       } else if(!strcmp(cmd, "GET_SOURCES")) {
         sprintf(sendbuf, "SOURCES %d\n", SOURCES);
+
+      } else if(!strcmp(cmd, "SET_GAIN")) {
+        setGain(strtol(arg, NULL, 0));
+        sprintf(sendbuf, "OK\n");
+
+      } else if(!strcmp(cmd, "GET_GAIN")) {
+        sprintf(sendbuf, "GAIN %d\n", gain);
+
+      } else if(!strcmp(cmd, "GET_MAX_GAIN")) {
+        sprintf(sendbuf, "MAX_GAIN %d\n", MAX_GAIN);
 
       } else if(!strcmp(cmd, "SET_MUTE")) {
         setMute(strtol(arg, NULL, 0) != 0 ? true : false);

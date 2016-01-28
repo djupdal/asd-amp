@@ -132,8 +132,9 @@
 
 void swoInit(void);
 
-void fpgaInit(uint32_t source);
+void fpgaInit(uint8_t source, uint8_t gain);
 void fpgaSelectSource(uint8_t source);
+void fpgaSetGain(uint8_t gain);
 
 void dacInit(uint8_t startVol);
 
@@ -162,14 +163,17 @@ void netPeriodic(void);
 #define VOL_MAX 1600
 #define VOL_MIN 0
 #define SOURCES 3
+#define MAX_GAIN 3
 
 extern bool saveSettings;
 
 extern int16_t volume;
 extern int source;
+extern int gain;
 extern bool mute;
 void setVol(int16_t newVolume);
 void setSource(int newSource);
+void setGain(int newGain);
 void setMute(bool newMute);
 
 #endif

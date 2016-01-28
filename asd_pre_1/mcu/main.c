@@ -13,12 +13,18 @@
 #define VOL_SHIFT 3
 #define VOL_SLACK 100
 
+#define INIT_MUTE_DELAY 2000
+#define MUTE_DELAY 1000
+
 int16_t volume = VOL_MAX;
 static int last_phase = 0;
 static bool dacMuted = false;
 bool mute = false;
 
 int source = 0;
+int gain = 0;
+
+int muteCounter = 0;
 
 volatile uint32_t msTicks;
 static FATFS FatFs;
@@ -199,11 +205,21 @@ void clearLed(int led) {
 }
 
 void setSource(int newSource) {
+  setMute(true);
+  // make sure relay is stable before continuing
+  for(int i = 0; i < 50; i++) usleep(1000); 
+  muteCounter = MUTE_DELAY;
   clearLed(source);
   source = newSource % SOURCES;
   fpgaSelectSource(source);
   saveSettings = true;
   setLed(source);
+}
+
+void setGain(int newGain) {
+  gain = newGain % (MAX_GAIN+1);
+  fpgaSetGain(gain);
+  saveSettings = true;
 }
 
 void cycleSource(void) {
@@ -292,8 +308,11 @@ int main(void) {
   if(volume > VOL_MAX) volume = VOL_MAX;
 
   source = getUint32("source") % SOURCES;
+  gain = getUint32("gain") % (MAX_GAIN+1);
 
-  fpgaInit(source);
+  printf("Volume: %d Source: %d Gain: %d\n", volume, source, gain);
+
+  fpgaInit(source, gain);
   spdifInit();
   dacInit(volume>>VOL_SHIFT);
   adcInit();
@@ -301,8 +320,10 @@ int main(void) {
 
   init = true;
 
+  muteCounter = 0;
+
   // wait a while before unmuting
-  while(msTicks < 2000);
+  while(msTicks < INIT_MUTE_DELAY);
   setMute(false);
 
   clearLed(0);
@@ -312,6 +333,7 @@ int main(void) {
 
   printf("Ready\n");
 
+  // main loop
   while(true) {
     netPeriodic();
 
@@ -319,7 +341,13 @@ int main(void) {
       saveSettings = false;
       setUint32("volume", volume);
       setUint32("source", source);
+      setUint32("gain", gain);
       if(mounted) flushConfig();
+    }
+
+    if(muteCounter == 0) {
+      setMute(false);
+      muteCounter = -1;
     }
   }
 }
@@ -329,6 +357,7 @@ int main(void) {
 
 void SysTick_Handler(void) {
   msTicks++;
+  if(muteCounter > 0) muteCounter--;
 }
 
 void GPIO_EVEN_IRQHandler(void) {
