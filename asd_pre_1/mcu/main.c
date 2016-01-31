@@ -179,13 +179,13 @@ void updateVol(int a, int b) {
 void setLed(int led) {
   switch(led) {
     case 0:
-      GPIO_PinOutClear(LED0_PORT, LED0_BIT);
+      GPIO_PinOutSet(LED2_PORT, LED2_BIT);
       break;
     case 1:
       GPIO_PinOutClear(LED1_PORT, LED1_BIT);
       break;
     case 2:
-      GPIO_PinOutSet(LED2_PORT, LED2_BIT);
+      GPIO_PinOutClear(LED0_PORT, LED0_BIT);
       break;
   }
 }
@@ -193,13 +193,13 @@ void setLed(int led) {
 void clearLed(int led) {
   switch(led) {
     case 0:
-      GPIO_PinOutSet(LED0_PORT, LED0_BIT);
+      GPIO_PinOutClear(LED2_PORT, LED2_BIT);
       break;
     case 1:
       GPIO_PinOutSet(LED1_PORT, LED1_BIT);
       break;
     case 2:
-      GPIO_PinOutClear(LED2_PORT, LED2_BIT);
+      GPIO_PinOutSet(LED0_PORT, LED0_BIT);
       break;
   }
 }

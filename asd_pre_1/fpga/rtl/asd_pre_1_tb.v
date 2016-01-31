@@ -1,4 +1,6 @@
 module asd_pre_1_tb;
+
+`timescale 1ns/1ps
    
    // Oscillators
    reg  MCU_OSC;
@@ -37,6 +39,9 @@ module asd_pre_1_tb;
    wire  BCKO; // bit clock 
    wire  DOUT; // data out
 
+   reg [63:0] word;
+   integer    i;
+
    /////////////////////////////////////////////////////////////////////////////
 
    asd_pre_1 dut
@@ -69,6 +74,44 @@ module asd_pre_1_tb;
       );
 
    /////////////////////////////////////////////////////////////////////////////
+
+   initial
+     begin
+        SCKI1 <= 0;
+        BCKI1 <= 0;
+
+        word <= 0;
+        i <= 0;
+     end
+
+   always @* begin
+      #1000 SCKI1 <= ~SCKI1;
+   end
+
+   always @* begin
+      #10000 BCKI1 <= ~BCKI1;
+   end
+
+   always @* begin
+      while(1) begin
+         word = {$random,$random};
+
+         for(i = 0; i < 32; i = i+1) begin
+            @(negedge BCKI1);
+            #1 LRCKI1 = 1;
+            DIN1 = word[63];
+            word[63:1] = word[62:0];
+            word[0] = 0;
+         end
+         for(i = 0; i < 32; i = i+1) begin
+            @(negedge BCKI1);
+            #1 LRCKI1 = 0;
+            DIN1 = word[63];
+            word[63:1] = word[62:0];
+            word[0] = 0;
+         end
+      end
+   end
 
    initial
      begin

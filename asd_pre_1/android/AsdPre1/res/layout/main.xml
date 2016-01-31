@@ -29,7 +29,36 @@
 	    android:layout_alignParentTop="true"
 	    android:max="100"
       android:onClick="onSeekBarClicked"/>
-
+  <TextView  
+      android:layout_width="wrap_content" 
+      android:layout_height="wrap_content" 
+      android:text="Digital gain: "
+      />
+  <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="fill_parent"
+              android:layout_height="wrap_content"
+              android:orientation="horizontal">
+    <RadioButton android:id="@+id/radio_gain_0"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:text="@string/radio_gain_0"
+                 android:onClick="onRadioButtonClicked"/>
+    <RadioButton android:id="@+id/radio_gain_1"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:text="@string/radio_gain_1"
+                 android:onClick="onRadioButtonClicked"/>
+    <RadioButton android:id="@+id/radio_gain_2"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:text="@string/radio_gain_2"
+                 android:onClick="onRadioButtonClicked"/>
+    <RadioButton android:id="@+id/radio_gain_3"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:text="@string/radio_gain_3"
+                 android:onClick="onRadioButtonClicked"/>
+  </RadioGroup>
   <TextView  
       android:layout_width="fill_parent" 
       android:layout_height="wrap_content" 
@@ -39,20 +68,20 @@
               android:layout_width="fill_parent"
               android:layout_height="wrap_content"
               android:orientation="vertical">
-    <RadioButton android:id="@+id/radio_source_2"
+    <RadioButton android:id="@+id/radio_source_0"
                  android:layout_width="wrap_content"
                  android:layout_height="wrap_content"
-                 android:text="@string/radio_source_2"
+                 android:text="@string/radio_source_0"
                  android:onClick="onRadioButtonClicked"/>
     <RadioButton android:id="@+id/radio_source_1"
                  android:layout_width="wrap_content"
                  android:layout_height="wrap_content"
                  android:text="@string/radio_source_1"
                  android:onClick="onRadioButtonClicked"/>
-    <RadioButton android:id="@+id/radio_source_0"
+    <RadioButton android:id="@+id/radio_source_2"
                  android:layout_width="wrap_content"
                  android:layout_height="wrap_content"
-                 android:text="@string/radio_source_0"
+                 android:text="@string/radio_source_2"
                  android:onClick="onRadioButtonClicked"/>
   </RadioGroup>
 </LinearLayout>

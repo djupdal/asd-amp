@@ -3,7 +3,11 @@
     <string name="app_name">AsdPre1</string>
     <string name="button_voldown">&#60;--</string>
     <string name="button_volup">--&#62;</string>
-    <string name="radio_source_0">SPDIF</string>
+    <string name="radio_source_0">Analog</string>
     <string name="radio_source_1">Optisk</string>
-    <string name="radio_source_2">Analog</string>
+    <string name="radio_source_2">SPDIF</string>
+    <string name="radio_gain_0">0dB</string>
+    <string name="radio_gain_1">6dB</string>
+    <string name="radio_gain_2">12dB</string>
+    <string name="radio_gain_3">18dB</string>
 </resources>

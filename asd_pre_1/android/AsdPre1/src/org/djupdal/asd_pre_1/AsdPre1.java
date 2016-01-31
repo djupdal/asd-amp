@@ -30,11 +30,17 @@ public class AsdPre1 extends Activity {
   RadioButton source1;
   RadioButton source2;
 
+  RadioButton gain0;
+  RadioButton gain1;
+  RadioButton gain2;
+  RadioButton gain3;
+
   int volmin = 1600;
   int volmax = 0;
   int volume = 1600;
   boolean mute = false;
   int source = 0;
+  int gain = 0;
 
   int failCounter = 0;
 
@@ -49,6 +55,7 @@ public class AsdPre1 extends Activity {
       volmax = sendMessage("GET_VOL_MAX");
       mute = sendMessage("GET_MUTE") == 0 ? false : true;
       source = sendMessage("GET_SOURCE");
+      gain = sendMessage("GET_GAIN");
 
       muteButton.setChecked(!mute);
       seekBar.setProgress(100-(100*(volume-volmax)/(volmin-volmax)));
@@ -56,6 +63,12 @@ public class AsdPre1 extends Activity {
         case 0: source0.setChecked(true); break;
         case 1: source1.setChecked(true); break;
         case 2: source2.setChecked(true); break;
+      }
+      switch(gain) {
+        case 0: gain0.setChecked(true); break;
+        case 1: gain1.setChecked(true); break;
+        case 2: gain2.setChecked(true); break;
+        case 3: gain3.setChecked(true); break;
       }
     } catch (Exception e) {}
   }
@@ -112,6 +125,12 @@ public class AsdPre1 extends Activity {
     source0 = (RadioButton)findViewById(R.id.radio_source_0);
     source1 = (RadioButton)findViewById(R.id.radio_source_1);
     source2 = (RadioButton)findViewById(R.id.radio_source_2);
+
+    // gain
+    gain0 = (RadioButton)findViewById(R.id.radio_gain_0);
+    gain1 = (RadioButton)findViewById(R.id.radio_gain_1);
+    gain2 = (RadioButton)findViewById(R.id.radio_gain_2);
+    gain3 = (RadioButton)findViewById(R.id.radio_gain_3);
   }
 
   public void onToggleClicked(View view) {
@@ -150,6 +169,30 @@ public class AsdPre1 extends Activity {
           if(checked) {
             sendMessage("SET_SOURCE 2");
             Log.w("AsdPre1", "source 2");
+          }
+          break;
+        case R.id.radio_gain_0:
+          if(checked) {
+            sendMessage("SET_GAIN 0");
+            Log.w("AsdPre1", "gain 0");
+          }
+          break;
+        case R.id.radio_gain_1:
+          if(checked) {
+            sendMessage("SET_GAIN 1");
+            Log.w("AsdPre1", "gain 1");
+          }
+          break;
+        case R.id.radio_gain_2:
+          if(checked) {
+            sendMessage("SET_GAIN 2");
+            Log.w("AsdPre1", "gain 2");
+          }
+          break;
+        case R.id.radio_gain_3:
+          if(checked) {
+            sendMessage("SET_GAIN 3");
+            Log.w("AsdPre1", "gain 3");
           }
           break;
       }
