@@ -1,0 +1,80 @@
+[*]
+[*] GTKWave Analyzer v3.3.58 (w)1999-2014 BSI
+[*] Sun Jan 31 14:18:05 2016
+[*]
+[dumpfile] "/home/djupdal/Dokumenter/amp/asd_pre_1/fpga/sim/dump.vcd"
+[dumpfile_mtime] "Sun Jan 31 14:15:37 2016"
+[dumpfile_size] 45274753
+[savefile] "/home/djupdal/Dokumenter/amp/asd_pre_1/fpga/sim/wave.gtkw"
+[timestart] 0
+[size] 1920 1150
+[pos] -1 -1
+*-29.000000 1632000000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] asd_pre_1_tb.
+[treeopen] asd_pre_1_tb.dut.
+[sst_width] 202
+[signals_width] 317
+[sst_expanded] 1
+[sst_vpaned_height] 354
+@28
+asd_pre_1_tb.BCKI1
+asd_pre_1_tb.DIN1
+@22
+asd_pre_1_tb.word[63:0]
+asd_pre_1_tb.i[31:0]
+@200
+-
+@28
+asd_pre_1_tb.dut.u_stp.bck
+asd_pre_1_tb.dut.u_stp.din
+asd_pre_1_tb.dut.u_stp.is_left
+@22
+asd_pre_1_tb.dut.u_stp.left[23:0]
+@28
+asd_pre_1_tb.dut.u_stp.lrck
+@22
+asd_pre_1_tb.dut.u_stp.right[23:0]
+asd_pre_1_tb.dut.u_stp.sr_left[31:0]
+asd_pre_1_tb.dut.u_stp.sr_right[31:0]
+@28
+asd_pre_1_tb.dut.u_stp.sync
+@200
+-
+@28
+asd_pre_1_tb.dut.u_gain.bck
+asd_pre_1_tb.dut.u_gain.gain[1:0]
+@22
+asd_pre_1_tb.dut.u_gain.left_in[23:0]
+asd_pre_1_tb.dut.u_gain.left_out[23:0]
+asd_pre_1_tb.dut.u_gain.left_out_i[23:0]
+@28
+asd_pre_1_tb.dut.u_gain.overflow_left_and
+asd_pre_1_tb.dut.u_gain.overflow_left_or
+asd_pre_1_tb.dut.u_gain.overflow_right_and
+asd_pre_1_tb.dut.u_gain.overflow_right_or
+@22
+asd_pre_1_tb.dut.u_gain.right_in[23:0]
+asd_pre_1_tb.dut.u_gain.right_out[23:0]
+asd_pre_1_tb.dut.u_gain.right_out_i[23:0]
+@28
+asd_pre_1_tb.dut.u_gain.sync_in
+asd_pre_1_tb.dut.u_gain.sync_out
+@200
+-
+@28
+asd_pre_1_tb.dut.u_pts.bck
+@22
+asd_pre_1_tb.dut.u_pts.cnt[31:0]
+@28
+asd_pre_1_tb.dut.u_pts.dout
+@22
+asd_pre_1_tb.dut.u_pts.left[23:0]
+@28
+asd_pre_1_tb.dut.u_pts.lrck
+@22
+asd_pre_1_tb.dut.u_pts.right[23:0]
+asd_pre_1_tb.dut.u_pts.shiftreg[23:0]
+@28
+asd_pre_1_tb.dut.u_pts.sync
+[pattern_trace] 1
+[pattern_trace] 0
