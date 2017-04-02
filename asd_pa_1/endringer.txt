@@ -1,1 +1,0 @@
-Legge til ekstra transistor for mute

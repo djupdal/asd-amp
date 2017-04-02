@@ -1,4 +1,5 @@
 EESchema Schematic File Version 2
+LIBS:poweramp-rescue
 LIBS:power
 LIBS:device
 LIBS:transistors
@@ -10,7 +11,6 @@ LIBS:cmos4000
 LIBS:adc-dac
 LIBS:memory
 LIBS:xilinx
-LIBS:special
 LIBS:microcontrollers
 LIBS:dsp
 LIBS:microchip
@@ -101,9 +101,11 @@ F 3 "" H 9950 5400 60  0001 C CNN
 	0    -1   -1   0   
 $EndComp
 $Comp
-L R R27
+L R-RESCUE-poweramp R27
 U 1 1 5412EA52
 P 6850 5700
+AR Path="/5412EA52" Ref="R27"  Part="1" 
+AR Path="/5411DDF6/5412EA52" Ref="R27"  Part="1" 
 F 0 "R27" V 6930 5700 50  0000 C CNN
 F 1 "100" V 6850 5700 50  0000 C CNN
 F 2 "Resistors_ThroughHole:Resistor_Horizontal_RM10mm" H 6850 5700 60  0001 C CNN
@@ -112,9 +114,11 @@ F 3 "" H 6850 5700 60  0001 C CNN
 	0    -1   -1   0   
 $EndComp
 $Comp
-L C C12
+L C-RESCUE-poweramp C12
 U 1 1 5412EA48
 P 6200 5700
+AR Path="/5412EA48" Ref="C12"  Part="1" 
+AR Path="/5411DDF6/5412EA48" Ref="C12"  Part="1" 
 F 0 "C12" V 6300 5850 50  0000 C CNN
 F 1 "10u" V 6300 5550 50  0000 C CNN
 F 2 "amp:47u_NP" H 6200 5700 60  0001 C CNN
@@ -124,9 +128,11 @@ F 4 "NP" V 6100 5550 60  0000 C CNN "Note"
 	0    -1   -1   0   
 $EndComp
 $Comp
-L R R26
+L R-RESCUE-poweramp R26
 U 1 1 5416CCBE
 P 6150 3150
+AR Path="/5416CCBE" Ref="R26"  Part="1" 
+AR Path="/5411DDF6/5416CCBE" Ref="R26"  Part="1" 
 F 0 "R26" V 6230 3150 50  0000 C CNN
 F 1 "100k" V 6150 3150 50  0000 C CNN
 F 2 "Resistors_ThroughHole:Resistor_Horizontal_RM10mm" H 6150 3150 60  0001 C CNN
@@ -157,9 +163,11 @@ F 3 "" H 4650 3050 60  0001 C CNN
 	0    1    1    0   
 $EndComp
 $Comp
-L R R25
+L R-RESCUE-poweramp R25
 U 1 1 54160B0A
 P 5400 3200
+AR Path="/54160B0A" Ref="R25"  Part="1" 
+AR Path="/5411DDF6/54160B0A" Ref="R25"  Part="1" 
 F 0 "R25" V 5480 3200 50  0000 C CNN
 F 1 "4.7k" V 5400 3200 50  0000 C CNN
 F 2 "Resistors_ThroughHole:Resistor_Horizontal_RM10mm" H 5400 3200 60  0001 C CNN
@@ -168,9 +176,11 @@ F 3 "" H 5400 3200 60  0001 C CNN
 	-1   0    0    1   
 $EndComp
 $Comp
-L R R24
+L R-RESCUE-poweramp R24
 U 1 1 54160B02
 P 5400 1400
+AR Path="/54160B02" Ref="R24"  Part="1" 
+AR Path="/5411DDF6/54160B02" Ref="R24"  Part="1" 
 F 0 "R24" V 5480 1400 50  0000 C CNN
 F 1 "100k" V 5400 1400 50  0000 C CNN
 F 2 "Resistors_ThroughHole:Resistor_Horizontal_RM10mm" H 5400 1400 60  0001 C CNN
@@ -179,9 +189,11 @@ F 3 "" H 5400 1400 60  0001 C CNN
 	-1   0    0    1   
 $EndComp
 $Comp
-L R R22
+L R-RESCUE-poweramp R22
 U 1 1 54160A74
 P 3400 2400
+AR Path="/54160A74" Ref="R22"  Part="1" 
+AR Path="/5411DDF6/54160A74" Ref="R22"  Part="1" 
 F 0 "R22" V 3480 2400 50  0000 C CNN
 F 1 "47k" V 3400 2400 50  0000 C CNN
 F 2 "Resistors_ThroughHole:Resistor_Horizontal_RM10mm" H 3400 2400 60  0001 C CNN
@@ -190,9 +202,11 @@ F 3 "" H 3400 2400 60  0001 C CNN
 	0    -1   -1   0   
 $EndComp
 $Comp
-L C C10
+L C-RESCUE-poweramp C10
 U 1 1 54160A67
 P 3800 3250
+AR Path="/54160A67" Ref="C10"  Part="1" 
+AR Path="/5411DDF6/54160A67" Ref="C10"  Part="1" 
 F 0 "C10" V 3900 3400 50  0000 C CNN
 F 1 "47u" V 3900 3100 50  0000 C CNN
 F 2 "amp:47u_NP" H 3800 3250 60  0001 C CNN
@@ -235,9 +249,11 @@ F 3 "" H 5700 3950 60  0001 C CNN
 	0    -1   -1   0   
 $EndComp
 $Comp
-L R R28
+L R-RESCUE-poweramp R28
 U 1 1 5415C5F2
 P 7100 3150
+AR Path="/5415C5F2" Ref="R28"  Part="1" 
+AR Path="/5411DDF6/5415C5F2" Ref="R28"  Part="1" 
 F 0 "R28" V 7180 3150 50  0000 C CNN
 F 1 "270" V 7100 3150 50  0000 C CNN
 F 2 "Resistors_ThroughHole:Resistor_Horizontal_RM10mm" H 7100 3150 60  0001 C CNN
@@ -263,9 +279,11 @@ Vee
 Text HLabel 1000 6650 0    60   Input ~ 0
 GndZ
 $Comp
-L C C11
+L C-RESCUE-poweramp C11
 U 1 1 5412E2BA
 P 5350 5500
+AR Path="/5412E2BA" Ref="C11"  Part="1" 
+AR Path="/5411DDF6/5412E2BA" Ref="C11"  Part="1" 
 F 0 "C11" V 5450 5650 50  0000 C CNN
 F 1 "100n" V 5450 5350 50  0000 C CNN
 F 2 "Capacitors_ThroughHole:Capacitor7x2.5RM5" H 5350 5500 60  0001 C CNN
@@ -274,9 +292,11 @@ F 3 "" H 5350 5500 60  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L R R23
+L R-RESCUE-poweramp R23
 U 1 1 5412E2B9
 P 5350 6050
+AR Path="/5412E2B9" Ref="R23"  Part="1" 
+AR Path="/5411DDF6/5412E2B9" Ref="R23"  Part="1" 
 F 0 "R23" V 5250 6050 50  0000 C CNN
 F 1 "10" V 5350 6050 50  0000 C CNN
 F 2 "Resistors_ThroughHole:Resistor_Horizontal_RM15mm" H 5350 6050 60  0001 C CNN
@@ -297,9 +317,11 @@ F 3 "" H 8650 4950 60  0001 C CNN
 	0    -1   1    0   
 $EndComp
 $Comp
-L R R29
+L R-RESCUE-poweramp R29
 U 1 1 5412E2B7
 P 8650 4650
+AR Path="/5412E2B7" Ref="R29"  Part="1" 
+AR Path="/5411DDF6/5412E2B7" Ref="R29"  Part="1" 
 F 0 "R29" V 8730 4650 50  0000 C CNN
 F 1 "10" V 8650 4650 50  0000 C CNN
 F 2 "Resistors_ThroughHole:Resistor_Horizontal_RM15mm" H 8650 4650 60  0001 C CNN

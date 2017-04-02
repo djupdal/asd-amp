@@ -1,4 +1,5 @@
 EESchema Schematic File Version 2
+LIBS:preamp-rescue
 LIBS:power
 LIBS:device
 LIBS:transistors
@@ -10,7 +11,6 @@ LIBS:cmos4000
 LIBS:adc-dac
 LIBS:memory
 LIBS:xilinx
-LIBS:special
 LIBS:microcontrollers
 LIBS:dsp
 LIBS:microchip
@@ -37,10 +37,10 @@ EELAYER END
 $Descr A4 11693 8268
 encoding utf-8
 Sheet 4 9
-Title ""
+Title "AsD Pre 1 Digital Preamplifier -- DAC"
 Date ""
 Rev ""
-Comp ""
+Comp "Asbjørn Djupdal"
 Comment1 ""
 Comment2 ""
 Comment3 ""
@@ -80,7 +80,7 @@ F 3 "" H 2250 4150 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L C C23
+L C-RESCUE-preamp C23
 U 1 1 54688BFB
 P 1575 6825
 F 0 "C23" H 1575 6925 40  0000 L CNN
@@ -91,7 +91,7 @@ F 3 "" H 1575 6825 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L CP1 C24
+L CP1-RESCUE-preamp C24
 U 1 1 54688E26
 P 1850 6825
 F 0 "C24" H 1900 6925 50  0000 L CNN
@@ -102,7 +102,7 @@ F 3 "" H 1850 6825 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L C C25
+L C-RESCUE-preamp C25
 U 1 1 54688EF9
 P 2375 6825
 F 0 "C25" H 2375 6925 40  0000 L CNN
@@ -124,7 +124,7 @@ F 3 "" H 2125 7175 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L CP1 C26
+L CP1-RESCUE-preamp C26
 U 1 1 546891DE
 P 2650 6825
 F 0 "C26" H 2700 6925 50  0000 L CNN
@@ -157,7 +157,7 @@ F 3 "" H 4150 3625 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L CP1 C33
+L CP1-RESCUE-preamp C33
 U 1 1 54689475
 P 5775 3200
 F 0 "C33" H 5825 3300 50  0000 L CNN
@@ -168,7 +168,7 @@ F 3 "" H 5775 3200 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L C C29
+L C-RESCUE-preamp C29
 U 1 1 5468953D
 P 4575 3200
 F 0 "C29" H 4575 3300 40  0000 L CNN
@@ -179,7 +179,7 @@ F 3 "" H 4575 3200 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L CP1 C30
+L CP1-RESCUE-preamp C30
 U 1 1 5468969E
 P 4825 3200
 F 0 "C30" H 4875 3300 50  0000 L CNN
@@ -190,7 +190,7 @@ F 3 "" H 4825 3200 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L C C31
+L C-RESCUE-preamp C31
 U 1 1 5468982C
 P 5200 3200
 F 0 "C31" H 5200 3300 40  0000 L CNN
@@ -201,7 +201,7 @@ F 3 "" H 5200 3200 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L CP1 C32
+L CP1-RESCUE-preamp C32
 U 1 1 54689871
 P 5450 3200
 F 0 "C32" H 5500 3300 50  0000 L CNN
@@ -212,7 +212,7 @@ F 3 "" H 5450 3200 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L C C22
+L C-RESCUE-preamp C22
 U 1 1 5467D927
 P 1350 6825
 F 0 "C22" H 1350 6925 40  0000 L CNN
@@ -223,7 +223,7 @@ F 3 "" H 1350 6825 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L C C21
+L C-RESCUE-preamp C21
 U 1 1 5467D95A
 P 1125 6825
 F 0 "C21" H 1125 6925 40  0000 L CNN
@@ -288,7 +288,7 @@ F 3 "" H 8175 4375 60  0000 C CNN
 	1    0    0    1   
 $EndComp
 $Comp
-L C C27
+L C-RESCUE-preamp C27
 U 1 1 54687F74
 P 3375 6825
 F 0 "C27" H 3375 6925 40  0000 L CNN
@@ -299,7 +299,7 @@ F 3 "" H 3375 6825 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L C C28
+L C-RESCUE-preamp C28
 U 1 1 54688051
 P 3700 6825
 F 0 "C28" H 3700 6925 40  0000 L CNN
@@ -321,7 +321,7 @@ F 3 "" H 3375 7175 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L R R16
+L R-RESCUE-preamp R16
 U 1 1 547D943A
 P 2525 3700
 F 0 "R16" V 2605 3700 40  0000 C CNN
@@ -336,7 +336,7 @@ SCL
 Text HLabel 1725 3450 0    60   Input ~ 0
 nRST
 $Comp
-L R R17
+L R-RESCUE-preamp R17
 U 1 1 5486BC58
 P 6675 1875
 F 0 "R17" V 6755 1875 40  0000 C CNN
@@ -347,7 +347,7 @@ F 3 "" H 6675 1875 30  0000 C CNN
 	0    1    1    0   
 $EndComp
 $Comp
-L R R23
+L R-RESCUE-preamp R23
 U 1 1 5486BD57
 P 7225 1875
 F 0 "R23" V 7305 1875 40  0000 C CNN
@@ -358,7 +358,7 @@ F 3 "" H 7225 1875 30  0000 C CNN
 	0    1    1    0   
 $EndComp
 $Comp
-L C C34
+L C-RESCUE-preamp C34
 U 1 1 5486BDAD
 P 6950 2100
 F 0 "C34" H 6950 2200 40  0000 L CNN
@@ -370,7 +370,7 @@ F 4 "NP0" H 7150 2100 60  0000 C CNN "Note"
 	1    0    0    -1  
 $EndComp
 $Comp
-L C C35
+L C-RESCUE-preamp C35
 U 1 1 5486BE34
 P 6950 2550
 F 0 "C35" H 6950 2650 40  0000 L CNN
@@ -393,7 +393,7 @@ F 3 "" H 6675 2400 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L R R18
+L R-RESCUE-preamp R18
 U 1 1 5486C150
 P 6675 2775
 F 0 "R18" V 6755 2775 40  0000 C CNN
@@ -404,7 +404,7 @@ F 3 "" H 6675 2775 30  0000 C CNN
 	0    1    1    0   
 $EndComp
 $Comp
-L R R24
+L R-RESCUE-preamp R24
 U 1 1 5486C1D2
 P 7225 2775
 F 0 "R24" V 7305 2775 40  0000 C CNN
@@ -415,7 +415,7 @@ F 3 "" H 7225 2775 30  0000 C CNN
 	0    1    1    0   
 $EndComp
 $Comp
-L C C40
+L C-RESCUE-preamp C40
 U 1 1 5486CB19
 P 7750 1400
 F 0 "C40" H 7750 1500 40  0000 L CNN
@@ -427,7 +427,7 @@ F 4 "NP0" V 7925 1475 60  0000 C CNN "Note"
 	0    1    1    0   
 $EndComp
 $Comp
-L R R27
+L R-RESCUE-preamp R27
 U 1 1 5486CDA1
 P 7800 1175
 F 0 "R27" V 7880 1175 40  0000 C CNN
@@ -632,7 +632,7 @@ Wire Wire Line
 	8050 1175 8700 1175
 Connection ~ 8700 1400
 $Comp
-L R R21
+L R-RESCUE-preamp R21
 U 1 1 5486D731
 P 6950 3050
 F 0 "R21" V 7030 3050 40  0000 C CNN
@@ -643,7 +643,7 @@ F 3 "" H 6950 3050 30  0000 C CNN
 	-1   0    0    1   
 $EndComp
 $Comp
-L C C38
+L C-RESCUE-preamp C38
 U 1 1 5486D897
 P 7525 3050
 F 0 "C38" H 7525 3150 40  0000 L CNN
@@ -698,7 +698,7 @@ Wire Wire Line
 Wire Wire Line
 	8075 2425 8075 2375
 $Comp
-L R R19
+L R-RESCUE-preamp R19
 U 1 1 5486FA46
 P 6675 4275
 F 0 "R19" V 6755 4275 40  0000 C CNN
@@ -709,7 +709,7 @@ F 3 "" H 6675 4275 30  0000 C CNN
 	0    1    1    0   
 $EndComp
 $Comp
-L R R25
+L R-RESCUE-preamp R25
 U 1 1 5486FA4C
 P 7225 4275
 F 0 "R25" V 7305 4275 40  0000 C CNN
@@ -720,7 +720,7 @@ F 3 "" H 7225 4275 30  0000 C CNN
 	0    1    1    0   
 $EndComp
 $Comp
-L C C36
+L C-RESCUE-preamp C36
 U 1 1 5486FA53
 P 6950 4500
 F 0 "C36" H 6950 4600 40  0000 L CNN
@@ -732,7 +732,7 @@ F 4 "NP0" H 7150 4500 60  0000 C CNN "Note"
 	1    0    0    -1  
 $EndComp
 $Comp
-L C C37
+L C-RESCUE-preamp C37
 U 1 1 5486FA5A
 P 6950 4950
 F 0 "C37" H 6950 5050 40  0000 L CNN
@@ -755,7 +755,7 @@ F 3 "" H 6675 4800 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L R R20
+L R-RESCUE-preamp R20
 U 1 1 5486FA66
 P 6675 5175
 F 0 "R20" V 6755 5175 40  0000 C CNN
@@ -766,7 +766,7 @@ F 3 "" H 6675 5175 30  0000 C CNN
 	0    1    1    0   
 $EndComp
 $Comp
-L R R26
+L R-RESCUE-preamp R26
 U 1 1 5486FA6C
 P 7225 5175
 F 0 "R26" V 7305 5175 40  0000 C CNN
@@ -777,7 +777,7 @@ F 3 "" H 7225 5175 30  0000 C CNN
 	0    1    1    0   
 $EndComp
 $Comp
-L C C41
+L C-RESCUE-preamp C41
 U 1 1 5486FA73
 P 7750 3800
 F 0 "C41" H 7750 3900 40  0000 L CNN
@@ -789,7 +789,7 @@ F 4 "NP0" V 7925 3875 60  0000 C CNN "Note"
 	0    1    1    0   
 $EndComp
 $Comp
-L R R28
+L R-RESCUE-preamp R28
 U 1 1 5486FA79
 P 7800 3575
 F 0 "R28" V 7880 3575 40  0000 C CNN
@@ -839,7 +839,7 @@ Wire Wire Line
 	8050 3575 8700 3575
 Connection ~ 8700 3800
 $Comp
-L R R22
+L R-RESCUE-preamp R22
 U 1 1 5486FA96
 P 6950 5450
 F 0 "R22" V 7030 5450 40  0000 C CNN
@@ -850,7 +850,7 @@ F 3 "" H 6950 5450 30  0000 C CNN
 	-1   0    0    1   
 $EndComp
 $Comp
-L C C39
+L C-RESCUE-preamp C39
 U 1 1 5486FA9D
 P 7525 5450
 F 0 "C39" H 7525 5550 40  0000 L CNN
@@ -999,7 +999,7 @@ Wire Wire Line
 Wire Wire Line
 	9625 4475 9625 4925
 $Comp
-L R R29
+L R-RESCUE-preamp R29
 U 1 1 548734DC
 P 8975 1975
 F 0 "R29" V 9055 1975 40  0000 C CNN
@@ -1010,7 +1010,7 @@ F 3 "" H 8975 1975 30  0000 C CNN
 	0    1    1    0   
 $EndComp
 $Comp
-L C C42
+L C-RESCUE-preamp C42
 U 1 1 54873709
 P 9250 2200
 F 0 "C42" H 9250 2300 40  0000 L CNN
@@ -1030,7 +1030,7 @@ Wire Wire Line
 Connection ~ 9675 2400
 Connection ~ 9250 1975
 $Comp
-L R R30
+L R-RESCUE-preamp R30
 U 1 1 54873FA3
 P 8975 4375
 F 0 "R30" V 9055 4375 40  0000 C CNN
@@ -1043,7 +1043,7 @@ $EndComp
 Wire Wire Line
 	8675 4375 8725 4375
 $Comp
-L C C43
+L C-RESCUE-preamp C43
 U 1 1 548742C1
 P 9250 4600
 F 0 "C43" H 9250 4700 40  0000 L CNN

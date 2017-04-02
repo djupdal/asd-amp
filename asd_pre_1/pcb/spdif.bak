@@ -1,4 +1,5 @@
 EESchema Schematic File Version 2
+LIBS:preamp-rescue
 LIBS:power
 LIBS:device
 LIBS:transistors
@@ -10,7 +11,6 @@ LIBS:cmos4000
 LIBS:adc-dac
 LIBS:memory
 LIBS:xilinx
-LIBS:special
 LIBS:microcontrollers
 LIBS:dsp
 LIBS:microchip
@@ -80,7 +80,7 @@ F 3 "" H 3450 4725 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L CP1 C14
+L CP1-RESCUE-preamp C14
 U 1 1 54653476
 P 3300 4475
 F 0 "C14" H 3350 4575 50  0000 L CNN
@@ -91,7 +91,7 @@ F 3 "" H 3300 4475 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L C C15
+L C-RESCUE-preamp C15
 U 1 1 546534F9
 P 3600 4475
 F 0 "C15" H 3600 4575 40  0000 L CNN
@@ -102,7 +102,7 @@ F 3 "" H 3600 4475 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L CP1 C18
+L CP1-RESCUE-preamp C18
 U 1 1 5465379A
 P 6750 4475
 F 0 "C18" H 6800 4575 50  0000 L CNN
@@ -113,7 +113,7 @@ F 3 "" H 6750 4475 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L C C17
+L C-RESCUE-preamp C17
 U 1 1 54653834
 P 6500 4475
 F 0 "C17" H 6500 4575 40  0000 L CNN
@@ -146,7 +146,7 @@ F 3 "" H 6625 4750 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L C C16
+L C-RESCUE-preamp C16
 U 1 1 54653A31
 P 6275 5425
 F 0 "C16" H 6275 5525 40  0000 L CNN
@@ -157,7 +157,7 @@ F 3 "" H 6275 5425 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L C C19
+L C-RESCUE-preamp C19
 U 1 1 54653AC9
 P 6825 5425
 F 0 "C19" H 6825 5525 40  0000 L CNN
@@ -168,7 +168,7 @@ F 3 "" H 6825 5425 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L R R15
+L R-RESCUE-preamp R15
 U 1 1 54653B1D
 P 6550 5625
 F 0 "R15" V 6630 5625 40  0000 C CNN
@@ -179,7 +179,7 @@ F 3 "" H 6550 5625 30  0000 C CNN
 	0    1    1    0   
 $EndComp
 $Comp
-L R R14
+L R-RESCUE-preamp R14
 U 1 1 54653FF7
 P 5975 4825
 F 0 "R14" V 6055 4825 40  0000 C CNN
@@ -235,7 +235,7 @@ F 3 "" H 9400 2925 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L C C20
+L C-RESCUE-preamp C20
 U 1 1 546650C1
 P 9150 2000
 F 0 "C20" H 9150 2100 40  0000 L CNN
@@ -279,7 +279,7 @@ F 3 "" H 5725 1800 60  0000 C CNN
 	1    0    0    1   
 $EndComp
 $Comp
-L R R13
+L R-RESCUE-preamp R13
 U 1 1 54666390
 P 4350 1800
 F 0 "R13" V 4430 1800 40  0000 C CNN
@@ -312,7 +312,7 @@ F 3 "" H 3625 1800 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L C C13
+L C-RESCUE-preamp C13
 U 1 1 54667021
 P 2775 1325
 F 0 "C13" H 2775 1425 40  0000 L CNN

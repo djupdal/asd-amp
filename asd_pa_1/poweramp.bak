@@ -1,4 +1,5 @@
 EESchema Schematic File Version 2
+LIBS:poweramp-rescue
 LIBS:power
 LIBS:device
 LIBS:transistors
@@ -10,7 +11,6 @@ LIBS:cmos4000
 LIBS:adc-dac
 LIBS:memory
 LIBS:xilinx
-LIBS:special
 LIBS:microcontrollers
 LIBS:dsp
 LIBS:microchip
@@ -156,7 +156,7 @@ F 3 "" H 3750 1850 60  0001 C CNN
 	1    0    0    1   
 $EndComp
 $Comp
-L CP1 C5
+L CP1-RESCUE-poweramp C5
 U 1 1 54189F9D
 P 6650 2450
 F 0 "C5" H 6700 2550 50  0000 L CNN
@@ -180,7 +180,7 @@ F7 "Vee" I L 8800 3550 60
 F8 "Mute" I L 8800 4050 60 
 $EndSheet
 $Comp
-L R R21
+L R-RESCUE-poweramp R21
 U 1 1 5414600A
 P 7800 3700
 F 0 "R21" V 7880 3700 50  0000 C CNN
@@ -216,7 +216,7 @@ F 4 "5A" H 8700 1650 60  0000 C CNN "Note"
 	0    -1   -1   0   
 $EndComp
 $Comp
-L R R20
+L R-RESCUE-poweramp R20
 U 1 1 54142FD1
 P 7800 2800
 F 0 "R20" V 7880 2800 50  0000 C CNN
@@ -275,7 +275,7 @@ L VCC #PWR01
 U 1 1 5411E822
 P 8600 3450
 F 0 "#PWR01" H 8600 3550 30  0001 C CNN
-F 1 "VCC" H 8600 3550 30  0000 C CNN
+F 1 "VCC" H 8600 3575 30  0000 C CNN
 F 2 "" H 8600 3450 60  0001 C CNN
 F 3 "" H 8600 3450 60  0001 C CNN
 	1    8600 3450
@@ -288,7 +288,7 @@ gnd_dc
 Text Label 1550 2000 0    60   ~ 0
 gnd_dc
 $Comp
-L R R2
+L R-RESCUE-poweramp R2
 U 1 1 5406EDC1
 P 2200 4850
 F 0 "R2" V 2280 4850 50  0000 C CNN
@@ -314,14 +314,14 @@ L VCC #PWR02
 U 1 1 5406C48B
 P 8950 1150
 F 0 "#PWR02" H 8950 1250 30  0001 C CNN
-F 1 "VCC" H 8950 1250 30  0000 C CNN
+F 1 "VCC" H 8950 1275 30  0000 C CNN
 F 2 "" H 8950 1150 60  0001 C CNN
 F 3 "" H 8950 1150 60  0001 C CNN
 	1    8950 1150
 	1    0    0    -1  
 $EndComp
 $Comp
-L CP1 C9
+L CP1-RESCUE-poweramp C9
 U 1 1 5406C472
 P 10150 1550
 F 0 "C9" H 10200 1650 50  0000 L CNN
@@ -332,7 +332,7 @@ F 3 "" H 10150 1550 60  0001 C CNN
 	1    0    0    1   
 $EndComp
 $Comp
-L CP1 C7
+L CP1-RESCUE-poweramp C7
 U 1 1 5406C45C
 P 9350 1550
 F 0 "C7" H 9400 1650 50  0000 L CNN
@@ -369,7 +369,7 @@ L VCC #PWR04
 U 1 1 5406C1D1
 P 2000 1100
 F 0 "#PWR04" H 2000 1200 30  0001 C CNN
-F 1 "VCC" H 2000 1200 30  0000 C CNN
+F 1 "VCC" H 2000 1225 30  0000 C CNN
 F 2 "" H 2000 1100 60  0001 C CNN
 F 3 "" H 2000 1100 60  0001 C CNN
 	1    2000 1100
@@ -444,7 +444,7 @@ $EndComp
 Text Label 1550 2100 0    60   ~ 0
 gnd_z
 $Comp
-L R R19
+L R-RESCUE-poweramp R19
 U 1 1 53D77405
 P 7250 3700
 F 0 "R19" V 7330 3700 50  0000 C CNN
@@ -455,7 +455,7 @@ F 3 "" H 7250 3700 60  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L R R3
+L R-RESCUE-poweramp R3
 U 1 1 53D6ACF1
 P 2800 4200
 F 0 "R3" V 2880 4200 50  0000 C CNN
@@ -466,7 +466,7 @@ F 3 "" H 2800 4200 60  0001 C CNN
 	-1   0    0    1   
 $EndComp
 $Comp
-L C C2
+L C-RESCUE-poweramp C2
 U 1 1 53D6ACE3
 P 2500 3900
 F 0 "C2" V 2600 4050 50  0000 C CNN
@@ -478,7 +478,7 @@ F 4 "Polyester" V 2700 3900 60  0000 C CNN "Note"
 	0    -1   -1   0   
 $EndComp
 $Comp
-L C C1
+L C-RESCUE-poweramp C1
 U 1 1 53D6AC9C
 P 2200 4200
 F 0 "C1" V 2300 4350 50  0000 C CNN
@@ -489,7 +489,7 @@ F 3 "" H 2200 4200 60  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L R R1
+L R-RESCUE-poweramp R1
 U 1 1 53D6AC8E
 P 1900 3900
 F 0 "R1" V 1980 3900 50  0000 C CNN
@@ -500,7 +500,7 @@ F 3 "" H 1900 3900 60  0001 C CNN
 	0    -1   -1   0   
 $EndComp
 $Comp
-L C C3
+L C-RESCUE-poweramp C3
 U 1 1 53D6AA3C
 P 4750 2950
 F 0 "C3" V 4850 3100 50  0000 C CNN
@@ -512,7 +512,7 @@ F 4 "NP" V 4950 2800 60  0000 C CNN "Note"
 	1    0    0    -1  
 $EndComp
 $Comp
-L C C4
+L C-RESCUE-poweramp C4
 U 1 1 53D668B4
 P 5950 4200
 F 0 "C4" V 6050 4350 50  0000 C CNN
@@ -523,7 +523,7 @@ F 3 "" H 5950 4200 60  0001 C CNN
 	0    -1   -1   0   
 $EndComp
 $Comp
-L R R10
+L R-RESCUE-poweramp R10
 U 1 1 53D66553
 P 4750 3500
 F 0 "R10" V 4830 3500 50  0000 C CNN
@@ -534,7 +534,7 @@ F 3 "" H 4750 3500 60  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L R R11
+L R-RESCUE-poweramp R11
 U 1 1 53D66541
 P 5200 3900
 F 0 "R11" V 5280 3900 50  0000 C CNN
@@ -545,7 +545,7 @@ F 3 "" H 5200 3900 60  0001 C CNN
 	0    -1   -1   0   
 $EndComp
 $Comp
-L R R18
+L R-RESCUE-poweramp R18
 U 1 1 53D663F4
 P 7250 2800
 F 0 "R18" V 7330 2800 50  0000 C CNN
@@ -556,7 +556,7 @@ F 3 "" H 7250 2800 60  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L R R12
+L R-RESCUE-poweramp R12
 U 1 1 53D65D85
 P 5400 1900
 F 0 "R12" V 5480 1900 50  0000 C CNN
@@ -567,7 +567,7 @@ F 3 "" H 5400 1900 60  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L R R16
+L R-RESCUE-poweramp R16
 U 1 1 53D65D52
 P 6300 1050
 F 0 "R16" V 6380 1050 50  0000 C CNN
@@ -578,7 +578,7 @@ F 3 "" H 6300 1050 60  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L POT XRV1
+L POT-RESCUE-poweramp XRV1
 U 1 1 53D64F58
 P 5800 2750
 F 0 "XRV1" H 5800 2650 50  0000 C CNN
@@ -589,7 +589,7 @@ F 3 "" H 5800 2750 60  0001 C CNN
 	0    1    1    0   
 $EndComp
 $Comp
-L R R7
+L R-RESCUE-poweramp R7
 U 1 1 53D64821
 P 3850 1200
 F 0 "R7" V 3930 1200 50  0000 C CNN
@@ -600,7 +600,7 @@ F 3 "" H 3850 1200 60  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L R R15
+L R-RESCUE-poweramp R15
 U 1 1 53D63E01
 P 6000 3300
 F 0 "R15" V 6080 3300 50  0000 C CNN
@@ -611,7 +611,7 @@ F 3 "" H 6000 3300 60  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L R R14
+L R-RESCUE-poweramp R14
 U 1 1 53D63D1B
 P 5800 2150
 F 0 "R14" V 5880 2150 50  0000 C CNN
@@ -622,7 +622,7 @@ F 3 "" H 5800 2150 60  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L R R4
+L R-RESCUE-poweramp R4
 U 1 1 53D63D10
 P 3150 2100
 F 0 "R4" V 3230 2100 50  0000 C CNN
@@ -633,7 +633,7 @@ F 3 "" H 3150 2100 60  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L ZENER D1
+L ZENER-RESCUE-poweramp D1
 U 1 1 53D63CFF
 P 3150 1300
 F 0 "D1" H 3150 1400 50  0000 C CNN
@@ -644,7 +644,7 @@ F 3 "" H 3150 1300 60  0001 C CNN
 	0    -1   -1   0   
 $EndComp
 $Comp
-L R R17
+L R-RESCUE-poweramp R17
 U 1 1 53D63CA1
 P 6300 5450
 F 0 "R17" V 6380 5450 50  0000 C CNN
@@ -655,7 +655,7 @@ F 3 "" H 6300 5450 60  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L R R13
+L R-RESCUE-poweramp R13
 U 1 1 53D63C98
 P 5600 5450
 F 0 "R13" V 5680 5450 50  0000 C CNN
@@ -666,7 +666,7 @@ F 3 "" H 5600 5450 60  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L R R9
+L R-RESCUE-poweramp R9
 U 1 1 53D63BCA
 P 4250 5450
 F 0 "R9" V 4330 5450 50  0000 C CNN
@@ -677,7 +677,7 @@ F 3 "" H 4250 5450 60  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L R R6
+L R-RESCUE-poweramp R6
 U 1 1 53D63BC4
 P 3450 5450
 F 0 "R6" V 3530 5450 50  0000 C CNN
@@ -688,7 +688,7 @@ F 3 "" H 3450 5450 60  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L R R8
+L R-RESCUE-poweramp R8
 U 1 1 53D63B6E
 P 4250 3400
 F 0 "R8" V 4330 3400 50  0000 C CNN
@@ -699,7 +699,7 @@ F 3 "" H 4250 3400 60  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L R R5
+L R-RESCUE-poweramp R5
 U 1 1 53D63B5B
 P 3450 3400
 F 0 "R5" V 3530 3400 50  0000 C CNN
@@ -1061,7 +1061,7 @@ F 4 "N" H 1000 2000 60  0001 C CNN "Spice_Netlist_Enabled"
 	-1   0    0    -1  
 $EndComp
 $Comp
-L C C6
+L C-RESCUE-poweramp C6
 U 1 1 5436F4FD
 P 8950 1550
 F 0 "C6" V 9050 1700 50  0000 C CNN
@@ -1072,7 +1072,7 @@ F 3 "" H 8950 1550 60  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L C C8
+L C-RESCUE-poweramp C8
 U 1 1 5436FAA2
 P 9750 1550
 F 0 "C8" V 9850 1700 50  0000 C CNN

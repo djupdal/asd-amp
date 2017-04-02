@@ -1,4 +1,4 @@
-update=sø. 12. okt. 2014 kl. 14.18 +0200
+update=ti. 14. feb. 2017 kl. 19.28 +0100
 version=1
 last_client=kicad
 [pcbnew]
@@ -42,18 +42,18 @@ EquName1=devcms
 version=1
 LibDir=
 [eeschema/libraries]
-LibName1=power
-LibName2=device
-LibName3=transistors
-LibName4=conn
-LibName5=linear
-LibName6=regul
-LibName7=74xx
-LibName8=cmos4000
-LibName9=adc-dac
-LibName10=memory
-LibName11=xilinx
-LibName12=special
+LibName1=poweramp-rescue
+LibName2=power
+LibName3=device
+LibName4=transistors
+LibName5=conn
+LibName6=linear
+LibName7=regul
+LibName8=74xx
+LibName9=cmos4000
+LibName10=adc-dac
+LibName11=memory
+LibName12=xilinx
 LibName13=microcontrollers
 LibName14=dsp
 LibName15=microchip

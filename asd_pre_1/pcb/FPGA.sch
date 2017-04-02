@@ -1,4 +1,5 @@
 EESchema Schematic File Version 2
+LIBS:preamp-rescue
 LIBS:power
 LIBS:device
 LIBS:transistors
@@ -10,7 +11,6 @@ LIBS:cmos4000
 LIBS:adc-dac
 LIBS:memory
 LIBS:xilinx
-LIBS:special
 LIBS:microcontrollers
 LIBS:dsp
 LIBS:microchip
@@ -37,10 +37,10 @@ EELAYER END
 $Descr A4 11693 8268
 encoding utf-8
 Sheet 6 9
-Title ""
+Title "AsD Pre 1 Digital Preamplifier -- FPGA"
 Date ""
 Rev ""
-Comp ""
+Comp "Asbjørn Djupdal"
 Comment1 ""
 Comment2 ""
 Comment3 ""
@@ -145,12 +145,12 @@ $EndComp
 $Comp
 L +3,3V #PWR067
 U 1 1 547AE25F
-P 2350 1350
-F 0 "#PWR067" H 2350 1310 30  0001 C CNN
-F 1 "+3,3V" H 2350 1460 30  0000 C CNN
-F 2 "" H 2350 1350 60  0000 C CNN
-F 3 "" H 2350 1350 60  0000 C CNN
-	1    2350 1350
+P 2350 750
+F 0 "#PWR067" H 2350 710 30  0001 C CNN
+F 1 "+3,3V" H 2350 860 30  0000 C CNN
+F 2 "" H 2350 750 60  0000 C CNN
+F 3 "" H 2350 750 60  0000 C CNN
+	1    2350 750 
 	1    0    0    -1  
 $EndComp
 $Comp
@@ -164,10 +164,10 @@ F 3 "" H 675 2450 60  0000 C CNN
 	1    675  2450
 	1    0    0    -1  
 $EndComp
-Text HLabel 1650 700  0    60   Input ~ 0
+Text HLabel 1650 550  0    60   Input ~ 0
 clk
 $Comp
-L C C58
+L C-RESCUE-preamp C58
 U 1 1 547AFFF3
 P 925 2150
 F 0 "C58" H 925 2250 40  0000 L CNN
@@ -202,7 +202,7 @@ $EndComp
 Text HLabel 1150 5125 0    60   Input ~ 0
 program_b
 $Comp
-L R R41
+L R-RESCUE-preamp R41
 U 1 1 547B1110
 P 1900 4775
 F 0 "R41" V 1980 4775 40  0000 C CNN
@@ -213,7 +213,7 @@ F 3 "" H 1900 4775 30  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L R R43
+L R-RESCUE-preamp R43
 U 1 1 547B167A
 P 2075 3275
 F 0 "R43" V 2155 3275 40  0000 C CNN
@@ -224,7 +224,7 @@ F 3 "" H 2075 3275 30  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L R R44
+L R-RESCUE-preamp R44
 U 1 1 547B1C6F
 P 2250 2425
 F 0 "R44" V 2330 2425 40  0000 C CNN
@@ -257,7 +257,7 @@ F 3 "" H 2250 3200 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L R R42
+L R-RESCUE-preamp R42
 U 1 1 547B36BC
 P 1925 3275
 F 0 "R42" V 2005 3275 40  0000 C CNN
@@ -268,7 +268,7 @@ F 3 "" H 1925 3275 30  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L R R40
+L R-RESCUE-preamp R40
 U 1 1 547B3857
 P 1775 3275
 F 0 "R40" V 1855 3275 40  0000 C CNN
@@ -279,7 +279,7 @@ F 3 "" H 1775 3275 30  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L R R45
+L R-RESCUE-preamp R45
 U 1 1 547B4743
 P 2625 2425
 F 0 "R45" V 2705 2425 40  0000 C CNN
@@ -340,7 +340,7 @@ F 3 "" H 3475 5275 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L C C59
+L C-RESCUE-preamp C59
 U 1 1 547B3548
 P 3625 5500
 F 0 "C59" H 3625 5600 40  0000 L CNN
@@ -371,10 +371,10 @@ nOVFL
 Text HLabel 3625 1750 0    60   Output ~ 0
 INT
 $Comp
-L DGND #PWR075
+L DGND #PWR074
 U 1 1 547F2597
 P 3625 6150
-F 0 "#PWR075" H 3625 6150 40  0001 C CNN
+F 0 "#PWR074" H 3625 6150 40  0001 C CNN
 F 1 "DGND" H 3625 6080 40  0000 C CNN
 F 2 "" H 3625 6150 60  0000 C CNN
 F 3 "" H 3625 6150 60  0000 C CNN
@@ -434,7 +434,7 @@ Wire Wire Line
 Wire Wire Line
 	2450 1650 2275 1650
 Wire Wire Line
-	1650 700  3950 700 
+	1650 550  3950 550 
 Wire Wire Line
 	3950 1450 4600 1450
 Wire Wire Line
@@ -444,15 +444,11 @@ Wire Wire Line
 Wire Wire Line
 	2925 1725 2275 1725
 Wire Wire Line
-	4600 1050 600  1050
-Wire Wire Line
-	600  1050 600  1575
+	600  1200 600  1575
 Wire Wire Line
 	600  1575 800  1575
 Wire Wire Line
-	4600 1150 675  1150
-Wire Wire Line
-	675  1150 675  1650
+	675  1250 675  1650
 Wire Wire Line
 	675  1650 800  1650
 Wire Wire Line
@@ -464,11 +460,11 @@ Wire Wire Line
 Wire Wire Line
 	4600 1950 2725 1950
 Wire Wire Line
-	2725 1950 2725 875 
+	2725 1950 2725 1300
 Wire Wire Line
-	2725 875  725  875 
+	2725 1300 725  1300
 Wire Wire Line
-	725  875  725  1500
+	725  1050 725  1500
 Wire Wire Line
 	725  1500 800  1500
 Wire Wire Line
@@ -477,7 +473,7 @@ Connection ~ 675  2350
 Wire Wire Line
 	2350 1950 925  1950
 Wire Wire Line
-	2350 1350 2350 1950
+	2350 750  2350 1950
 Wire Wire Line
 	2350 1500 2275 1500
 Connection ~ 2350 1500
@@ -568,7 +564,7 @@ Connection ~ 3475 5300
 Wire Wire Line
 	3625 5700 3625 6150
 Wire Wire Line
-	3950 700  3950 3150
+	3950 550  3950 3150
 Wire Wire Line
 	3950 3150 4600 3150
 Connection ~ 3950 1450
@@ -725,4 +721,71 @@ Wire Wire Line
 	4275 6800 4000 6800
 Wire Wire Line
 	4325 6900 4000 6900
+$Comp
+L R-RESCUE-preamp R76
+U 1 1 58E10E48
+P 2600 900
+F 0 "R76" V 2680 900 40  0000 C CNN
+F 1 "4.7k" V 2607 901 40  0000 C CNN
+F 2 "Resistors_SMD:R_0805_HandSoldering" V 2530 900 30  0001 C CNN
+F 3 "" H 2600 900 30  0000 C CNN
+	1    2600 900 
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	675  1250 3600 1250
+Wire Wire Line
+	3600 1250 3600 1150
+Wire Wire Line
+	3600 1150 4600 1150
+Wire Wire Line
+	600  1200 3550 1200
+Wire Wire Line
+	3550 1200 3550 1050
+Wire Wire Line
+	3550 1050 4600 1050
+$Comp
+L R-RESCUE-preamp R75
+U 1 1 58E11950
+P 1550 925
+F 0 "R75" V 1630 925 40  0000 C CNN
+F 1 "4.7k" V 1557 926 40  0000 C CNN
+F 2 "Resistors_SMD:R_0805_HandSoldering" V 1480 925 30  0001 C CNN
+F 3 "" H 1550 925 30  0000 C CNN
+	1    1550 925 
+	0    1    1    0   
+$EndComp
+$Comp
+L R-RESCUE-preamp R74
+U 1 1 58E119C2
+P 1025 1050
+F 0 "R74" V 1105 1050 40  0000 C CNN
+F 1 "2.4k" V 1032 1051 40  0000 C CNN
+F 2 "Resistors_SMD:R_0805_HandSoldering" V 955 1050 30  0001 C CNN
+F 3 "" H 1025 1050 30  0000 C CNN
+	1    1025 1050
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	1800 925  2350 925 
+Connection ~ 2350 925 
+Wire Wire Line
+	1275 1050 2350 1050
+Connection ~ 2350 1050
+Wire Wire Line
+	775  1050 725  1050
+Connection ~ 725  1300
+Wire Wire Line
+	2600 650  2475 650 
+Wire Wire Line
+	2475 650  2475 800 
+Wire Wire Line
+	2475 800  2350 800 
+Connection ~ 2350 800 
+Wire Wire Line
+	2600 1150 2600 1575
+Connection ~ 2600 1575
+Wire Wire Line
+	1300 925  1300 1250
+Connection ~ 1300 1250
 $EndSCHEMATC

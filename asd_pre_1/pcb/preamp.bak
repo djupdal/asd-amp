@@ -1,4 +1,5 @@
 EESchema Schematic File Version 2
+LIBS:preamp-rescue
 LIBS:power
 LIBS:device
 LIBS:transistors
@@ -10,7 +11,6 @@ LIBS:cmos4000
 LIBS:adc-dac
 LIBS:memory
 LIBS:xilinx
-LIBS:special
 LIBS:microcontrollers
 LIBS:dsp
 LIBS:microchip
@@ -37,7 +37,7 @@ EELAYER END
 $Descr A4 11693 8268
 encoding utf-8
 Sheet 1 9
-Title ""
+Title "AsD Pre 1 Digital Preamplifier"
 Date ""
 Rev ""
 Comp ""
@@ -65,7 +65,7 @@ F12 "clk_out" O R 6700 5475 60
 F13 "INT_FPGA" I R 6700 5575 60 
 F14 "program_b" O R 6700 5675 60 
 F15 "done" I R 6700 5775 60 
-F16 "nRST_DAC" I R 6700 6000 60 
+F16 "nRST_DAC" O R 6700 6000 60 
 F17 "nINT_ETH" I R 6700 6100 60 
 F18 "nRST_ADC" O L 5225 4500 60 
 F19 "nHPF" O L 5225 4700 60 
