@@ -170,7 +170,6 @@ void updateVol(int a, int b) {
   }
 
   setVol(volume);
-  saveSettings = true;
 
   // save state
   last_phase = phase;
@@ -342,7 +341,7 @@ int main(void) {
       setUint32("volume", volume);
       setUint32("source", source);
       setUint32("gain", gain);
-      if(mounted) flushConfig();
+      flushConfig();
     }
 
     if(muteCounter == 0) {

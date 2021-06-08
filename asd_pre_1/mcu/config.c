@@ -1,145 +1,159 @@
 #include "asd_pre_1.h"
-#include "ff.h"
+#include "config.h"
+
+#include <em_msc.h>
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <ctype.h>
 #include <string.h>
-#include "microsd.h"
-#include "diskio.h"
+
+#define CONFIG_LINES (CONFIG_FLASH_SIZE/sizeof(struct configLine))
 
 struct configLine {
-  char id[82];
-  char value[82];
-  struct configLine *next;
+  char id[ID_SIZE];
+  union {
+    char value[VALUE_SIZE];
+    uint32_t uint32Value;
+    int16_t int16Value;
+    double doubleValue;
+  };
 };
 
-struct configLine *config = NULL;
-struct configLine *lastConfig = NULL;
+struct configLine configMem[CONFIG_LINES+1];
 
-static void printConfig(void) {
-  printf("Current config:\n");
-  
-  struct configLine *c = config;
-
-  while(c) {
-    if(c->id[0]) {
-      printf("%s", c->id);
-      if(c->value[0]) {
-        printf(" %s", c->value);
-      }
-    }
-    printf("\n");
-    c = c->next;
+void flushConfig(void) {
+  MSC_Init();
+  MSC_ErasePage((uint32_t*)CONFIG_FLASH_ADDRESS);
+  if(MSC_WriteWord((uint32_t*)CONFIG_FLASH_ADDRESS, configMem, CONFIG_FLASH_SIZE) != mscReturnOk) {
+    printf("Can't write flash\n");
   }
+  MSC_Deinit();
 }
 
 void configInit(void) {
-  FIL fil;
-  FRESULT fr;
-  char line[82];
+  memcpy(configMem, (uint32_t*)CONFIG_FLASH_ADDRESS, CONFIG_FLASH_SIZE);
 
-  fr = f_open(&fil, "config.txt", FA_READ);
-  if (fr) return;
+  if(strncmp(configMem[0].id, CONFIG_FLASH_ID, strlen(CONFIG_FLASH_ID))) {
+    printf("Initializing flash\n");
+    strcpy(configMem[0].id, CONFIG_FLASH_ID);
+    strcpy(configMem[0].value, CONFIG_FLASH_VERSION);
 
-  struct configLine **c = &config;
-
-  while(f_gets(line, 82, &fil)) {
-    struct configLine *cLine = malloc(sizeof(struct configLine));
-    cLine->next = NULL;
-    *c = cLine;
-    lastConfig = cLine;
-    c = &cLine->next;
-
-    if(line[0] == '#') {
-      // comment, store it all
-      strcpy(cLine->id, line);
-      *strchr(cLine->id, '\n') = 0;
-      cLine->value[0] = 0;
-    } else if(isspace(line[0])) {
-      // white space, just insert blank line
-      cLine->id[0] = 0;
-    } else {
-      // id
-      char *token = strtok(line, " \t\n");
-      if(token) strcpy(cLine->id, token);
-      else cLine->id[0] = 0;
-
-      // value
-      token = strtok(NULL, " \t\n");
-      if(token) strcpy(cLine->value, token);
-      else cLine->value[0] = 0;
+    for(int i = 1; i < CONFIG_LINES; i++) {
+      configMem[i].id[0] = 0;
+      configMem[i].value[0] = 0;
     }
+    flushConfig();
   }
-
-  printConfig();
-
-  f_close(&fil);
 }
 
-void flushConfig(void) {
-  FIL fil;
-  FRESULT fr;
-
-  //printConfig();
-
-  fr = f_open(&fil, "config.txt", FA_WRITE | FA_CREATE_ALWAYS);
-  if (fr) return;
-
-  struct configLine *c = config;
-
-  while(c) {
-    if(c->id[0]) {
-      f_printf(&fil, "%s", c->id);
-      if(c->value[0]) {
-        f_printf(&fil, " %s", c->value);
-      }
+static struct configLine *getLine(char *id) {
+  for(int i = 1; i < CONFIG_LINES; i++) {
+    if(!strncmp(configMem[i].id, id, 8)) {
+      return &configMem[i];
     }
-    f_printf(&fil, "\n");
-    c = c->next;
-  }
-
-  f_close(&fil);
-}
-
-struct configLine *getLine(char *id) {
-  struct configLine *c = config;
-
-  while(c) {
-    if(!strcmp(id, c->id)) {
-      return c;
-    } else c = c->next;
   }
   return NULL;
 }
 
+static struct configLine *getFreeLine(void) {
+  for(int i = 1; i < CONFIG_LINES; i++) {
+    if(!configMem[i].id[0]) {
+      return &configMem[i];
+    }
+  }
+  return NULL;
+}
+
+bool configExists(char *id) {
+  return getLine(id);
+}
+
+int16_t getInt16(char *id) {
+  struct configLine *line = getLine(id);
+  if(line) {
+    return line->int16Value;
+  }
+  return 0;
+}
+
 uint32_t getUint32(char *id) {
-  struct configLine *c = getLine(id);
-  if(c) return strtol(c->value, NULL, 0);
+  struct configLine *line = getLine(id);
+  if(line) {
+    return line->uint32Value;
+  }
+  return 0;
+}
+
+double getDouble(char *id) {
+  struct configLine *line = getLine(id);
+  if(line) {
+    return line->doubleValue;
+  }
   return 0;
 }
 
 char *getString(char *id) {
-  struct configLine *c = getLine(id);
-  if(c) return c->value;
-  return NULL;
+  struct configLine *line = getLine(id);
+  if(line) return line->value;
+  return 0;
+}
+
+void setInt16(char *id, int16_t val) {
+  if(strlen(id) > ID_SIZE) panic("Config id length");
+
+  struct configLine *line = getLine(id);
+
+  if(!line) line = getFreeLine();
+
+  if(line) {
+    strcpy(line->id, id);
+    line->int16Value = val;
+  }
 }
 
 void setUint32(char *id, uint32_t val) {
-  char buf[82];
-  sprintf(buf, "%u", (unsigned int)val);
-  setString(id, buf);
+  if(strlen(id) > ID_SIZE) panic("Config id length");
+
+  struct configLine *line = getLine(id);
+
+  if(!line) line = getFreeLine();
+
+  if(line) {
+    strcpy(line->id, id);
+    line->uint32Value = val;
+  }
+}
+
+void setDouble(char *id, double val) {
+  if(strlen(id) > ID_SIZE) panic("Config id length");
+  
+  struct configLine *line = getLine(id);
+
+  if(!line) line = getFreeLine();
+
+  if(line) {
+    strcpy(line->id, id);
+    line->doubleValue = val;
+  }
 }
 
 void setString(char *id, char *s) {
-  struct configLine *c = getLine(id);
-  if(c) {
-    strcpy(c->value, s);
-  } else {
-    c = malloc(sizeof(struct configLine));
-    c->next = NULL;
-    strcpy(c->id, id);
-    strcpy(c->value, s);
-    lastConfig->next = c;
-    lastConfig = c;
+  if(strlen(id) > ID_SIZE) panic("Config id length");
+  if(strlen(s) >= VALUE_SIZE) panic("Config value length");
+
+  struct configLine *line = getLine(id);
+
+  if(!line) line = getFreeLine();
+
+  if(line) {
+    strcpy(line->id, id);
+    strcpy(line->value, s);
   }
+}
+
+void clearConfig(void) {
+  configMem[0].id[0] = 0;
+  flushConfig();
+  configInit();
 }

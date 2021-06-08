@@ -1,30 +1,34 @@
 PART=EFM32GG232F1024
 
-AS = arm-none-eabi-as
-CC = arm-none-eabi-gcc
-OBJCOPY=arm-none-eabi-objcopy
-OBJDUMP=arm-none-eabi-objdump
+export SDK=/opt/SimplicityStudio_v4/developer/sdks/gecko_sdk_suite/v2.4/
+export TOOLCHAIN=/opt/SimplicityStudio_v4/developer/toolchains/gnu_arm/7.2_2017q4/bin/
+
+AS = ${TOOLCHAIN}/arm-none-eabi-as
+CC = ${TOOLCHAIN}/arm-none-eabi-gcc
+OBJCOPY= ${TOOLCHAIN}/arm-none-eabi-objcopy
+OBJDUMP= ${TOOLCHAIN}/arm-none-eabi-objdump
 
 CFLAGS = \
 	-g -O2 -Wall -std=gnu99 \
 	-mthumb -mcpu=cortex-m3 \
 	-D${PART} \
-	-Iexternal/Device/SiliconLabs/EFM32GG/Include/ \
-	-Iexternal/CMSIS/Include/ \
-	-Iexternal/emlib/inc/ \
-	-Iexternal/drivers \
 	-Iexternal/fatfs/src/ \
 	-Iexternal/lwip/src/include/ \
 	-Iexternal/lwip/src/include/ipv4/ \
 	-Iexternal/lwip/src/platform/ \
 	-Iexternal/enc424j600/include/ \
 	-Iexternal/enc424j600/src/ \
+	-I${SDK}/platform/Device/SiliconLabs/EFM32GG/Include/ \
+	-I${SDK}/hardware/kit/common/drivers/ \
+	-I${SDK}/platform/CMSIS/Include/ \
+	-I${SDK}/platform/emlib/inc/ \
+	-I${SDK}/platform/middleware/usb_gecko/inc/ \
 	-I.
-LDFLAGS = -mthumb -mcpu=cortex-m3 -Wl,-Texternal/efm32gg.ld --specs=nosys.specs 
+LDFLAGS = -mthumb -mcpu=cortex-m3 -Wl,-T${SDK}/platform/Device/SiliconLabs/EFM32GG/Source/GCC/efm32gg.ld --specs=nosys.specs 
 ASFLAGS =
 
 .PHONY: default
-default: asd_pre_1.bin asd_pre_1.hex
+default: asd_pre_1.bin
 
 %.hex : %.elf
 	${OBJCOPY} -O ihex $< $@
@@ -38,7 +42,6 @@ default: asd_pre_1.bin asd_pre_1.hex
 
 asd_pre_1.elf: \
 	$(patsubst %.c,%.o,$(wildcard *.c)) \
-	$(patsubst %.c,%.o,$(wildcard external/emlib/src/*.c)) \
 	$(patsubst %.c,%.o,$(wildcard external/drivers/*.c)) \
 	$(patsubst %.c,%.o,$(wildcard external/fatfs/src/*.c)) \
 	$(patsubst %.c,%.o,$(wildcard external/fatfs/src/option/unicode.c)) \
@@ -48,8 +51,9 @@ asd_pre_1.elf: \
 	$(patsubst %.c,%.o,$(wildcard external/lwip/src/platform/*.c)) \
 	$(patsubst %.c,%.o,$(wildcard external/lwip/src/api/*.c)) \
 	external/enc424j600/src/enc424j600_spi.o \
-	external/Device/SiliconLabs/EFM32GG/Source/GCC/startup_efm32gg.o \
-	external/Device/SiliconLabs/EFM32GG/Source/system_efm32gg.o
+	$(patsubst %.c,%.o,$(wildcard ${SDK}/platform/emlib/src/*.c)) \
+	${SDK}/platform/Device/SiliconLabs/EFM32GG/Source/GCC/startup_efm32gg.o \
+	${SDK}/platform/Device/SiliconLabs/EFM32GG/Source/system_efm32gg.o
 	${CC} ${LDFLAGS} $^ -o $@
 
 %.o : %.c

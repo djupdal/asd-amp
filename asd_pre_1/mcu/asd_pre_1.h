@@ -1,11 +1,15 @@
 #ifndef ASD_PRE_1_H
 #define ASD_PRE_1_H
 
+#define IN_ADDR_T_DEFINED
+
 #include <stdint.h>
 #include <stdbool.h>
 #include <stddef.h>
 
 #include "efm32gg232f1024.h"
+
+#include "config.h"
 
 #include "em_device.h"
 #include "em_cmu.h"
@@ -146,13 +150,6 @@ void clearLed(int led);
 
 void msleep(uint32_t ms);
 void usleep(uint16_t us);
-
-void configInit(void);
-void flushConfig(void);
-uint32_t getUint32(char *id);
-char *getString(char *id);
-void setUint32(char *id, uint32_t val);
-void setString(char *id, char *s);
 
 void panic(const char *fmt, ...);
 
